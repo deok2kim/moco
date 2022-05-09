@@ -1,25 +1,90 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import styled from 'styled-components';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <NavBar>NavBar</NavBar>
+      <SideBar>SideBar</SideBar>
+      <Main>Main</Main>
+      <SideBarRight>SideBar</SideBarRight>
+      <ContentBox>
+        <Content1>Content1</Content1>
+        <Content2>Content2</Content2>
+      </ContentBox>
+      <Footer>Footer</Footer>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  display: grid;
+  height: 130vh;
+  grid-template-columns: 1.1fr 1fr 1fr 1.1fr;
+  grid-template-rows: 0.2fr 1fr 0.8fr 0.5fr;
+  grid-template-areas:
+    'nav nav nav nav'
+    'sidebar main main   sidebarRight'
+    'sidebar content content  sidebarRight'
+    'footer footer footer  footer';
+  text-align: center;
+  grid-gap: 1rem;
+  transition: all 0.25s ease-in-out;
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1fr;
+    grid-template-areas:
+      'nav'
+      'sidebar'
+      'main'
+      'content'
+      'footer';
+  }
+  color: white;
+`;
+const NavBar = styled.nav`
+  background: #3a3a55;
+  grid-area: nav;
+  padding: 0.25rem;
+`;
+const Main = styled.main`
+  background: #1f2128;
+  color: white;
+  grid-area: main;
+  padding: 0.25rem;
+`;
+const SideBar = styled.div`
+  background: #9aaab7;
+  grid-area: sidebar;
+  padding: 0.25rem;
+`;
+
+const SideBarRight = styled(SideBar)`
+  grid-area: sidebarRight;
+`;
+
+const ContentBox = styled.div`
+  display: flex;
+  column-gap: 0.5rem;
+  padding: 0.25rem;
+  align-items: center;
+  grid-area: content;
+  justify-content: center;
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+`;
+const Content1 = styled.div`
+  background: #a6b8b9;
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+`;
+const Content2 = styled(Content1)``;
+// const Content3 = styled(Content1)``;
+const Footer = styled.footer`
+  background: #ff9637;
+  grid-area: footer;
+  padding: 0.25rem;
+`;
 export default App;
