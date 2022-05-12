@@ -1,9 +1,12 @@
-import { atom, atomFamily, selector, selectorFamily } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 import axios from 'axios';
 
-export const currentCoinTypeState = atom({
-  key: 'CurrentCoinType',
-  default: 'C0101',
+export const currentCoinState = atom({
+  key: 'CurrentCoin',
+  default: {
+    type: 'C0101',
+    symbol: 'BTC',
+  },
 });
 
 export const coinListQuery = selector({
@@ -25,7 +28,7 @@ export const coinInfoListQuery = selector({
     const params = {
       type: 'custom',
       crncCd: 'C0100', // 원화마켓,
-      coin: get(currentCoinTypeState) || 'C0101', // 코인 선택 or 기본코인(비트코인)
+      coin: get(currentCoinState).type, // 코인 선택 or 기본코인(비트코인)
       lists: {
         ticker: {
           coinType: 'ALL',
@@ -52,11 +55,43 @@ export const coinInfoListQuery = selector({
 export const transactionState = selector({
   key: 'Transaction',
   get: ({ get }) => {
-    const coinType = get(currentCoinTypeState);
+    const coinType = get(currentCoinState).type;
     const {
       transaction: { [coinType]: result },
     } = get(coinInfoListQuery);
     return result;
+  },
+});
+export const orderbookState = atom({
+  key: 'Orderbook',
+  default: {
+    ask: [],
+    bid: [],
+    timestamp: '',
+  },
+});
+
+export const orderbookStateRefresher = atom({
+  key: 'orderbookStateRefresher',
+  default: 0,
+});
+
+export const orderbookQuery = selector({
+  key: 'OrderbookQuery',
+  get: async ({ get }) => {
+    get(orderbookStateRefresher);
+    const response = await axios.get(
+      `https://pub1.bithumb.com/trade-info/v1/orderbook/${
+        get(currentCoinState).symbol
+      }_KRW/1`,
+    );
+    if (response.data.message === 'Success') {
+      return response.data.data;
+    }
+    return [];
+  },
+  set: ({ set }) => {
+    set(orderbookStateRefresher, v => v + 1);
   },
 });
 

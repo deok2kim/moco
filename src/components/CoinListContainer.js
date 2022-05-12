@@ -1,13 +1,15 @@
 import React, { Suspense } from 'react';
 
 import { useRecoilValue } from 'recoil';
-import { getCoinInfoList, getCoinList } from '../state/state';
+import { coinInfoListQuery, coinListQuery } from '../state/state';
 import CoinList from './CoinList';
 
 function CoinListContainer() {
-  const coinInfoList = useRecoilValue(getCoinInfoList('C0101'));
-  const coinList = useRecoilValue(getCoinList);
-  console.log('coinList');
+  const coinInfoList = useRecoilValue(coinInfoListQuery);
+  const coinList = useRecoilValue(coinListQuery);
+
+  console.log('$CoinListContainer');
+  console.log(coinList);
   console.log(coinInfoList);
 
   return (

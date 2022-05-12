@@ -1,6 +1,9 @@
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
+import CandlestickChartContainer from './components/CandlestickChartContainer';
 import CoinListContainer from './components/CoinListContainer';
+import TransactionContainer from './components/TransactionContainer';
+import OrderbookContainer from './components/OrderbookContainer';
 
 function App() {
   console.log('MOUNT APP');
@@ -12,11 +15,23 @@ function App() {
           <CoinListContainer />
         </Suspense>
       </SideBar>
-      <Main>Main</Main>
+      <Main>
+        <Suspense fallback={<div>Loading...</div>}>
+          <CandlestickChartContainer />
+        </Suspense>
+      </Main>
       <SideBarRight>SideBar</SideBarRight>
       <ContentBox>
-        <Content1>Content1</Content1>
-        <Content2>Content2</Content2>
+        <Content1>
+          <Suspense fallback={<div>Loading...</div>}>
+            <TransactionContainer />
+          </Suspense>
+        </Content1>
+        <Content2>
+          <Suspense fallback={<div>Loading...</div>}>
+            <OrderbookContainer />
+          </Suspense>
+        </Content2>
       </ContentBox>
       <Footer>Footer</Footer>
     </Container>

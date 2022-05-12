@@ -1,8 +1,6 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
-import { getCoinList } from '../state/state';
 
 const Container = styled.div`
   display: flex;
