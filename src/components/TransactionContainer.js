@@ -1,13 +1,13 @@
 import React, { Suspense, useEffect } from 'react';
 
 import { useRecoilValue } from 'recoil';
-import { transactionState } from '../state/state';
+import { currentCoinState, transactionState } from '../state/state';
 
 import Transaction from './Transaction';
 
 function TransactionContainer() {
   const transaction = useRecoilValue(transactionState);
-
+  const currentCoin = useRecoilValue(currentCoinState);
   console.log('$TransactionContainer: ', transaction);
   /*
   crncCd,
@@ -18,7 +18,7 @@ function TransactionContainer() {
   */
   return (
     <Suspense fallback={<div>...Loading</div>}>
-      <Transaction transaction={transaction} />
+      <Transaction transaction={transaction} symbol={currentCoin.symbol} />
     </Suspense>
   );
 }

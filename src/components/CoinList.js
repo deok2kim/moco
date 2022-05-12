@@ -1,121 +1,57 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
+import { formatNumber } from '../utils/common';
 
 const Container = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  height: 100%;
-`;
-
-const SearchBar = styled.div`
-  display: flex;
-  min-height: 46px;
-  padding: 0;
-  border: 0 none;
-  border-bottom: 1px solid #eee;
-  position: relative;
-`;
-
-const Input = styled.input`
-  height: 46px;
-  border-radius: 0;
-  font-size: 14px;
-  background-color: transparent;
-  padding-left: 36px;
-  outline: 0;
-  line-height: 21px;
-  font-weight: 400;
-  letter-spacing: 0;
-  padding: 0 12px;
-  width: 100%;
-  border: none;
-`;
-
-const TabWrapper = styled.div`
-  margin: 0;
-  padding: 0;
-  border: 0;
-  margin-bottom: 0;
-`;
-
-const Tabs = styled.dt`
-  display: flex;
-  position: relative;
-  border-bottom: 1px solid #eee;
-`;
-
-const Tab = styled.a`
-  flex: 1;
-  max-width: 100%;
-  padding: 11px 0 9px;
-  font-size: 14px;
-  line-height: 21px;
-  box-sizing: border-box;
-`;
-
-const CoinListWrapper = styled.div``;
-
-const CoinListHeaders = styled.ul`
-  display: table;
-  width: 100%;
-  overflow: hidden;
-  border-bottom: 1px solid #eee;
-  /* list-style: none; */
-`;
-const CoinListHeader = styled.li`
-  padding-top: 8px;
-  width: 107px;
-  display: table-cell;
-  padding: 8px 0 6px;
-  font-size: 12px;
-  line-height: 18px;
-  font-weight: normal;
-  box-sizing: border-box;
-  vertical-align: middle;
-
-  &:first-child {
-    padding-left: 25px;
-    text-align: left;
+  padding: 1rem;
+  div {
+    overflow-y: scroll;
+    height: 75vh;
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #fff;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #999;
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 1px solid transparent;
+    }
   }
 `;
 
-const CoinListBody = styled.div``;
+const Title = styled.p`
+  color: inherit;
+`;
 
-const CoinListTable = styled.ol``;
-const CoinListItem = styled.li`
-  display: flex;
-  padding: 8px 0px;
+const Header = styled.table`
   width: 100%;
-  overflow: hidden;
-  align-items: center;
+  padding: 10px;
+  tr {
+    th:first-child {
+      text-align: start;
+    }
+    th {
+      padding: 1rem 0;
+      text-align: end;
+    }
+  }
 `;
 
-const BookmarkWrapper = styled.div`
-  flex: 0 0 26px;
-  max-width: 26px;
-  padding-left: 7px;
-  box-sizing: border-box;
-`;
-
-const Bookmark = styled.a``;
-
-const CoinInfoWrapper = styled.a`
-  flex: 1;
-  position: relative;
-  display: table;
-  width: calc(100% - 26px);
-  vertical-align: middle;
-  box-sizing: border-box;
-`;
-const CoinInfoItem = styled.div`
-  display: table-cell;
-  vertical-align: middle;
-  box-sizing: border-box;
-  font-size: 12px;
-  line-height: 16px;
-  word-break: break-word;
+const Body = styled(Header)`
+  tr {
+    td:first-child {
+      text-align: start;
+    }
+    td {
+      padding: 0.5rem 0;
+      text-align: end;
+    }
+  }
 `;
 
 function CoinList({ coinList, ticker }) {
@@ -124,51 +60,61 @@ function CoinList({ coinList, ticker }) {
   console.log('$CoinList: ', coinList);
   return (
     <Container>
-      <SearchBar>
+      <Title>체결 내역</Title>
+      {/* <SearchBar>
         <Input />
-      </SearchBar>
-      <TabWrapper>
-        <Tabs>
-          {tabList.map(tab => (
-            <Tab key={tab}>{tab}</Tab>
-          ))}
-        </Tabs>
-      </TabWrapper>
-      <CoinListWrapper>
-        <CoinListHeaders>
-          {headerList.map(header => (
-            <CoinListHeader key={header}>{header}</CoinListHeader>
-          ))}
-        </CoinListHeaders>
-        <CoinListBody>
-          <CoinListTable>
-            {coinList.map(coin =>
-              ticker[coin.coinType] ? (
-                <CoinListItem key={coin.coinSymbol}>
-                  <BookmarkWrapper>
-                    <Bookmark>💥</Bookmark>
-                  </BookmarkWrapper>
-
-                  <CoinInfoWrapper>
-                    <CoinInfoItem>{coin.coinName}</CoinInfoItem>
-                    <CoinInfoItem>
-                      {ticker[coin.coinType]?.closePrice}
-                    </CoinInfoItem>
-                    <CoinInfoItem>
-                      {ticker[coin.coinType]?.chgRate}%
-                    </CoinInfoItem>
-                    <CoinInfoItem>
-                      {ticker[coin.coinType]?.volume24H}
-                    </CoinInfoItem>
-                  </CoinInfoWrapper>
-                </CoinListItem>
-              ) : (
-                ''
-              ),
+      </SearchBar> */}
+      <Header>
+        <colgroup>
+          <col width="50%" />
+          <col width="50%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>원화마켓</th>
+            <th>즐겨찾기</th>
+          </tr>
+        </thead>
+      </Header>
+      <Header>
+        <colgroup>
+          <col width="30%" />
+          <col width="25%" />
+          <col width="20%" />
+          <col width="25%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>자산</th>
+            <th>현재가</th>
+            <th>변동률(24H)</th>
+            <th>거래금액(24H)</th>
+          </tr>
+        </thead>
+      </Header>
+      <div>
+        <Body>
+          <colgroup>
+            <col width="30%" />
+            <col width="25%" />
+            <col width="20%" />
+            <col width="25%" />
+          </colgroup>
+          <tbody>
+            {coinList.map(
+              coin =>
+                ticker[coin.coinType] && (
+                  <tr key={coin.coinSymbol}>
+                    <td>🔶{coin.coinName}</td>
+                    <td>{formatNumber(ticker[coin.coinType]?.closePrice)}</td>
+                    <td>{ticker[coin.coinType]?.chgRate}%</td>
+                    <td>{formatNumber(ticker[coin.coinType]?.volume24H)}</td>
+                  </tr>
+                ),
             )}
-          </CoinListTable>
-        </CoinListBody>
-      </CoinListWrapper>
+          </tbody>
+        </Body>
+      </div>
     </Container>
   );
 }

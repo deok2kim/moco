@@ -32,12 +32,9 @@ const Header = styled.table`
   width: 100%;
   padding: 10px;
   tr {
-    th:first-child {
-      text-align: start;
-    }
+    text-align: center;
     th {
       padding: 1rem 0;
-      text-align: end;
     }
   }
 `;
@@ -58,42 +55,44 @@ const ColorTextBuySell = styled.span`
   color: ${props => (props.color === '1' ? 'red' : 'blue')};
 `;
 
-function Transaction({ transaction, symbol }) {
+function Orderbook({ orderbook }) {
+  // console.log(orderbook);
   return (
     <Container>
-      <Title>체결 내역</Title>
+      <Title>오더북</Title>
       <Header>
         <colgroup>
-          <col width="33%" />
-          <col width="33%" />
-          <col width="33%" />
+          <col width="30%" />
+          <col width="20%" />
+          <col width="50%" />
         </colgroup>
         <thead>
           <tr>
-            <th>시간</th>
-            <th>가격(KRW)</th>
-            <th>수량({symbol})</th>
+            <th colSpan={2}>가격(KRW)</th>
+            <th>수량(BTC)</th>
           </tr>
         </thead>
       </Header>
       <div>
         <Body>
           <colgroup>
-            <col width="33%" />
-            <col width="33%" />
-            <col width="33%" />
+            <col width="30%" />
+            <col width="20%" />
+            <col width="50%" />
           </colgroup>
           <tbody>
-            {transaction.map(t => (
-              <tr key={t.contDtm}>
-                {/* <td>{t.buySellGb}</td> */}
-                <td>{t.contDtm.split(' ')[1].split('.')[0]}</td>
-                <td>{formatNumber(t.contPrice)}</td>
-                <td>
-                  <ColorTextBuySell color={t.buySellGb}>
-                    {t.contQty} {symbol}
-                  </ColorTextBuySell>
-                </td>
+            {orderbook.ask.map(o => (
+              <tr key={o.p}>
+                <td>{formatNumber(o.p)}</td>
+                <td>-5.55%</td>
+                <td>{formatNumber(o.q)}</td>
+              </tr>
+            ))}
+            {orderbook.bid.map(o => (
+              <tr key={o.p}>
+                <td>{formatNumber(o.p)}</td>
+                <td>-5.55%</td>
+                <td>{formatNumber(o.q)}</td>
               </tr>
             ))}
           </tbody>
@@ -103,14 +102,18 @@ function Transaction({ transaction, symbol }) {
   );
 }
 
-Transaction.defaultProps = {
-  transaction: [],
-  symbol: '',
+Orderbook.defaultProps = {
+  orderbook: {
+    ask: [],
+    bid: [],
+    timestamp: '',
+  },
 };
 
-Transaction.propTypes = {
-  transaction: PropTypes.arrayOf(PropTypes.object),
-  symbol: PropTypes.string,
+Orderbook.propTypes = {
+  orderbook: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  ),
 };
 
-export default Transaction;
+export default Orderbook;
