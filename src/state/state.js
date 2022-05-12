@@ -16,7 +16,7 @@ export const coinListQuery = selector({
       'https://gw.bithumb.com/exchange/v1/comn/intro?_=&retry=0',
     );
     if (response.data.message === 'success') {
-      return response.data.data.coinList;
+      return response.data.data.coinsOnMarketList.C0101;
     }
     return [];
   },
@@ -59,6 +59,15 @@ export const transactionState = selector({
     const {
       transaction: { [coinType]: result },
     } = get(coinInfoListQuery);
+    return result;
+  },
+});
+
+export const tickerState = selector({
+  key: 'Ticker',
+  get: ({ get }) => {
+    const coinType = get(currentCoinState).type;
+    const { ticker: result } = get(coinInfoListQuery);
     return result;
   },
 });

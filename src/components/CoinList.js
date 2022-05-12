@@ -118,7 +118,7 @@ const CoinInfoItem = styled.div`
   word-break: break-word;
 `;
 
-function CoinList({ coinList }) {
+function CoinList({ coinList, ticker }) {
   const tabList = ['원화 마켓', 'BTC 마켓', '보유자산', '즐겨찾기'];
   const headerList = ['자산', '현재가', '변동률(24H)', '거래금액(24H)'];
   console.log('$CoinList: ', coinList);
@@ -142,42 +142,30 @@ function CoinList({ coinList }) {
         </CoinListHeaders>
         <CoinListBody>
           <CoinListTable>
-            {coinList.map(coin => (
-              <CoinListItem key={coin.coinSymbol}>
-                <BookmarkWrapper>
-                  <Bookmark>💥</Bookmark>
-                </BookmarkWrapper>
+            {coinList.map(coin =>
+              ticker[coin.coinType] ? (
+                <CoinListItem key={coin.coinSymbol}>
+                  <BookmarkWrapper>
+                    <Bookmark>💥</Bookmark>
+                  </BookmarkWrapper>
 
-                <CoinInfoWrapper>
-                  <CoinInfoItem>{coin.coinName}</CoinInfoItem>
-                  <CoinInfoItem>43,254,000</CoinInfoItem>
-                  <CoinInfoItem>-4.10%</CoinInfoItem>
-                  <CoinInfoItem>173,885백만</CoinInfoItem>
-                </CoinInfoWrapper>
-              </CoinListItem>
-            ))}
-            <CoinListItem>
-              <BookmarkWrapper>
-                <Bookmark>💥</Bookmark>
-              </BookmarkWrapper>
-              <CoinInfoWrapper>
-                <CoinInfoItem>비트코인</CoinInfoItem>
-                <CoinInfoItem>43,254,000</CoinInfoItem>
-                <CoinInfoItem>-4.10%</CoinInfoItem>
-                <CoinInfoItem>173,885백만</CoinInfoItem>
-              </CoinInfoWrapper>
-            </CoinListItem>
-            <CoinListItem>
-              <BookmarkWrapper>
-                <Bookmark>💥</Bookmark>
-              </BookmarkWrapper>
-              <CoinInfoWrapper>
-                <CoinInfoItem>비트코인</CoinInfoItem>
-                <CoinInfoItem>43,254,000</CoinInfoItem>
-                <CoinInfoItem>-4.10%</CoinInfoItem>
-                <CoinInfoItem>173,885백만</CoinInfoItem>
-              </CoinInfoWrapper>
-            </CoinListItem>
+                  <CoinInfoWrapper>
+                    <CoinInfoItem>{coin.coinName}</CoinInfoItem>
+                    <CoinInfoItem>
+                      {ticker[coin.coinType]?.closePrice}
+                    </CoinInfoItem>
+                    <CoinInfoItem>
+                      {ticker[coin.coinType]?.chgRate}%
+                    </CoinInfoItem>
+                    <CoinInfoItem>
+                      {ticker[coin.coinType]?.volume24H}
+                    </CoinInfoItem>
+                  </CoinInfoWrapper>
+                </CoinListItem>
+              ) : (
+                ''
+              ),
+            )}
           </CoinListTable>
         </CoinListBody>
       </CoinListWrapper>
@@ -189,8 +177,33 @@ export default CoinList;
 
 CoinList.defaultProps = {
   coinList: [],
+  ticker: {},
 };
+
+/*
+buyVolume: "3849.86329656"
+chgAmt: "-2181000"
+chgRate: "-5.45"
+closePrice: "37820000"
+coinType: "C0101"
+crncCd: "C0100"
+date: "20220512"
+highPrice: "42244000"
+lowPrice: "36190000"
+openPrice: "40001000"
+prevClosePrice: "41824000"
+sellVolume: "3546.0284262"
+tickType: "24H"
+time: "223527"
+value: "288108302650.70773"
+value24H: "288108302650.70773"
+volume: "7395.89362276"
+volume24H: "7395.89362276"
+volumePower: "108.57"
+volumePower24H: "108.57"
+*/
 
 CoinList.propTypes = {
   coinList: PropTypes.arrayOf(PropTypes.object),
+  ticker: PropTypes.objectOf(PropTypes.object),
 };
