@@ -1,53 +1,63 @@
-import { atom, selector, selectorFamily } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import axios from 'axios';
 
-export const getCoinList = selector({
-  key: 'getCoinList',
-  get: async ({ get }) => {
-    const response = await fetch(
+export const currentCoinTypeState = atom({
+  key: 'CurrentCoinType',
+  default: 'C0101',
+});
+
+export const coinListQuery = selector({
+  key: 'CoinListQuery',
+  get: async () => {
+    const response = await axios.get(
       'https://gw.bithumb.com/exchange/v1/comn/intro?_=&retry=0',
     );
-    const json = await response.json();
-    if (json.status === 200) {
-      // console.log(json.data.coinList);
-      return json.data.coinList.filter(coin => coin.siseCrncCd === 'C0100');
+    if (response.data.message === 'success') {
+      return response.data.data.coinList;
     }
     return [];
   },
 });
 
-export const getCoinInfoList = selectorFamily({
-  key: 'getCoinInfoList',
-  get:
-    coinType =>
-    async ({ get }) => {
-      const params = {
-        type: 'custom',
-        crncCd: 'C0100', // 원화마켓,
-        coin: coinType || 'C0101', // 코인 선택 or 기본코인(비트코인)
-        lists: {
-          ticker: {
-            coinType: 'ALL',
-            tickType: '24H',
-          },
-          transaction: {
-            limit: 31,
-          },
+export const coinInfoListQuery = selector({
+  key: 'CoinInfoListQuery',
+  get: async ({ get }) => {
+    const params = {
+      type: 'custom',
+      crncCd: 'C0100', // 원화마켓,
+      coin: get(currentCoinTypeState) || 'C0101', // 코인 선택 or 기본코인(비트코인)
+      lists: {
+        ticker: {
+          coinType: 'ALL',
+          tickType: '24H',
         },
-      };
-
-      const response = await axios.get(
-        'https://pub1.bithumb.com/trade-info/v1/getTradeData',
-        {
-          params,
+        transaction: {
+          limit: 31,
         },
-      );
+      },
+    };
+    const response = await axios.get(
+      'https://pub1.bithumb.com/trade-info/v1/getTradeData',
+      {
+        params,
+      },
+    );
+    if (response.data.message === 'Success') {
+      return response.data.data.C0100;
+    }
+    return [];
+  },
+});
 
-      if (response.data.message === 'Success') {
-        return response.data.data.C0100;
-      }
-      return [];
-    },
+export const transactionState = selector({
+  key: 'Transaction',
+  get: ({ get }) => {
+    const coinType = get(currentCoinTypeState);
+    const {
+      transaction: { [coinType]: result },
+    } = get(coinInfoListQuery);
+    return result;
+  },
 });
 
 // https://pub2.bithumb.com/public/candlesticknew/C0423_C0100/10M
