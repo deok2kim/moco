@@ -64,4 +64,4 @@ function OrderbookContainer() {
   );
 }
 
-export default OrderbookContainer;
+export default React.memo(OrderbookContainer);

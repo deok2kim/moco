@@ -52,8 +52,13 @@ export const coinInfoListQuery = selector({
   },
 });
 
-export const transactionState = selector({
+export const transactionState = atom({
   key: 'Transaction',
+  default: [],
+});
+
+export const transactionQuery = selector({
+  key: 'TransactionQuery',
   get: ({ get }) => {
     const coinType = get(currentCoinState).type;
     const {

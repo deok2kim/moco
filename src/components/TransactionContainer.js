@@ -1,12 +1,17 @@
 import React, { Suspense, useEffect } from 'react';
 
-import { useRecoilValue } from 'recoil';
-import { currentCoinState, transactionState } from '../state/state';
+import { useRecoilState, useRecoilStateLoadable, useRecoilValue } from 'recoil';
+import {
+  currentCoinState,
+  transactionQuery,
+  transactionState,
+} from '../state/state';
 
 import Transaction from './Transaction';
 
 function TransactionContainer() {
-  const transaction = useRecoilValue(transactionState);
+  const [transaction, setTransaction] = useRecoilState(transactionState);
+  const [getTransactionState, ,] = useRecoilStateLoadable(transactionQuery);
   const currentCoin = useRecoilValue(currentCoinState);
   console.log('$TransactionContainer: ', transaction);
   /*
@@ -16,6 +21,11 @@ function TransactionContainer() {
   contPrice
   contQty
   */
+  useEffect(() => {
+    if (getTransactionState.state === 'hasValue') {
+      setTransaction(getTransactionState.contents);
+    }
+  }, [getTransactionState]);
   return (
     <Suspense fallback={<div>...Loading</div>}>
       <Transaction transaction={transaction} symbol={currentCoin.symbol} />

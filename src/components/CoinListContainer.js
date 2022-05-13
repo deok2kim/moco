@@ -21,4 +21,4 @@ function CoinListContainer() {
   );
 }
 
-export default CoinListContainer;
+export default React.memo(CoinListContainer);

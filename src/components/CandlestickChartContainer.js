@@ -25,4 +25,4 @@ function CandlestickChartContainer() {
   );
 }
 
-export default CandlestickChartContainer;
+export default React.memo(CandlestickChartContainer);

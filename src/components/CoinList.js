@@ -57,7 +57,6 @@ const Body = styled(Header)`
 function CoinList({ coinList, ticker }) {
   const tabList = ['원화 마켓', 'BTC 마켓', '보유자산', '즐겨찾기'];
   const headerList = ['자산', '현재가', '변동률(24H)', '거래금액(24H)'];
-  console.log('$CoinList: ', coinList);
   return (
     <Container>
       <Title>체결 내역</Title>
