@@ -68,14 +68,21 @@ export const transactionQuery = selector({
   },
 });
 
-export const tickerState = selector({
+// export const tickerState = selector({
+//   key: 'Ticker',
+//   get: ({ get }) => {
+//     // const coinType = get(currentCoinState).type;
+//     const { ticker: result } = get(coinInfoListQuery);
+//     return result;
+//   },
+//   set: ({ set }) => {},
+// });
+
+export const tickerState = atom({
   key: 'Ticker',
-  get: ({ get }) => {
-    const coinType = get(currentCoinState).type;
-    const { ticker: result } = get(coinInfoListQuery);
-    return result;
-  },
+  default: {},
 });
+
 export const orderbookState = atom({
   key: 'Orderbook',
   default: {

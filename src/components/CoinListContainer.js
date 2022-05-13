@@ -1,18 +1,21 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { coinInfoListQuery, coinListQuery, tickerState } from '../state/state';
 import CoinList from './CoinList';
 
 function CoinListContainer() {
   const coinInfoList = useRecoilValue(coinInfoListQuery);
   const coinList = useRecoilValue(coinListQuery);
-  const ticker = useRecoilValue(tickerState);
+  const [ticker, setTicker] = useRecoilState(tickerState);
 
   console.log('$CoinListContainer');
   console.log(coinList);
   console.log(coinInfoList);
-  console.log(ticker);
+  // console.log(ticker);
+  useEffect(() => {
+    setTicker(coinInfoList.ticker);
+  }, []);
 
   return (
     <Suspense fallback={<div>...Loading</div>}>
