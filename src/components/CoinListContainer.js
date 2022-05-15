@@ -9,9 +9,9 @@ function CoinListContainer() {
   const coinList = useRecoilValue(coinListQuery);
   const [ticker, setTicker] = useRecoilState(tickerState);
 
-  console.log('$CoinListContainer');
-  console.log(coinList);
-  console.log(coinInfoList);
+  // console.log('$CoinListContainer');
+  // console.log(coinList);
+  // console.log(coinInfoList);
   // console.log(ticker);
   useEffect(() => {
     setTicker(coinInfoList.ticker);

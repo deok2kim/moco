@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
+import {
+  BsArrowUp,
+  BsArrowDown,
+  BsFillCaretDownFill,
+  BsFillCaretUpFill,
+} from 'react-icons/bs';
+import { AiFillStar } from 'react-icons/ai';
 import { formatNumber } from '../utils/common';
 
 const Container = styled.div`
@@ -55,8 +62,8 @@ const Body = styled(Header)`
 `;
 
 function CoinList({ coinList, ticker }) {
-  const tabList = ['원화 마켓', 'BTC 마켓', '보유자산', '즐겨찾기'];
-  const headerList = ['자산', '현재가', '변동률(24H)', '거래금액(24H)'];
+  // const tabList = ['원화 마켓', 'BTC 마켓', '보유자산', '즐겨찾기'];
+  // const headerList = ['자산', '현재가', '변동률(24H)', '거래금액(24H)'];
   return (
     <Container>
       <Title>체결 내역</Title>
@@ -104,7 +111,10 @@ function CoinList({ coinList, ticker }) {
               coin =>
                 ticker[coin.coinType] && (
                   <tr key={coin.coinSymbol}>
-                    <td>🔶{coin.coinName}</td>
+                    <td>
+                      <AiFillStar />
+                      {coin.coinName}
+                    </td>
                     <td>{formatNumber(ticker[coin.coinType]?.closePrice)}</td>
                     <td>{ticker[coin.coinType]?.chgRate}%</td>
                     <td>{formatNumber(ticker[coin.coinType]?.volume24H)}</td>

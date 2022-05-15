@@ -13,7 +13,7 @@ function TransactionContainer() {
   const [transaction, setTransaction] = useRecoilState(transactionState);
   const [getTransactionState, ,] = useRecoilStateLoadable(transactionQuery);
   const currentCoin = useRecoilValue(currentCoinState);
-  console.log('$TransactionContainer: ', transaction);
+  // console.log('$TransactionContainer: ', transaction);
   /*
   crncCd,
   coinType

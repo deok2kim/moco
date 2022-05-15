@@ -41,6 +41,7 @@ const Header = styled.table`
 
 const Body = styled(Header)`
   tr {
+    background-color: ${props => props.color};
     td:first-child {
       text-align: start;
     }
@@ -49,6 +50,10 @@ const Body = styled(Header)`
       text-align: end;
     }
   }
+`;
+
+const Tr = styled.tr`
+  background-color: ${props => props.color};
 `;
 
 const ColorTextBuySell = styled.span`
@@ -82,18 +87,18 @@ function Orderbook({ orderbook }) {
           </colgroup>
           <tbody>
             {orderbook.ask.map(o => (
-              <tr key={o.p}>
+              <Tr key={o.p} color="#2c3847">
                 <td>{formatNumber(o.p)}</td>
                 <td>-5.55%</td>
                 <td>{formatNumber(o.q)}</td>
-              </tr>
+              </Tr>
             ))}
             {orderbook.bid.map(o => (
-              <tr key={o.p}>
+              <Tr key={o.p} color="#3a343c">
                 <td>{formatNumber(o.p)}</td>
                 <td>-5.55%</td>
                 <td>{formatNumber(o.q)}</td>
-              </tr>
+              </Tr>
             ))}
           </tbody>
         </Body>

@@ -32,7 +32,7 @@ function App() {
       };
       ws.current.onmessage = e => {
         const data = JSON.parse(e.data);
-        console.log(data);
+        // console.log(data);
         if (data.subtype === 'tr') {
           // transaction
           setTransaction(prev => [
@@ -137,6 +137,7 @@ function App() {
 const Container = styled.div`
   display: grid;
   height: 130vh;
+  /* min-width: 1500px; */
   grid-template-columns: 1.1fr 1fr 1fr 1.1fr;
   grid-template-rows: 0.2fr 1fr 0.8fr 0.5fr;
   grid-template-areas:
@@ -148,13 +149,15 @@ const Container = styled.div`
   grid-gap: 1rem;
   transition: all 0.25s ease-in-out;
   @media (max-width: 550px) {
+    /* width: 550px; */
     grid-template-columns: 1fr;
-    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1fr;
+    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 2.2fr 1fr;
     grid-template-areas:
       'nav'
-      'sidebar'
       'main'
       'content'
+      'sidebar'
+      'sidebarRight'
       'footer';
   }
   color: white;

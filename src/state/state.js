@@ -9,6 +9,18 @@ export const currentCoinState = atom({
   },
 });
 
+// export const currentCoinInfo = atom({
+//   key: 'CurrentCoinInfo',
+//   default: {
+//     price: '',
+//     rate: '',
+//     openPrice: '',
+//     highPrice: '',
+//     lowPrice: '',
+//     closePrice: '',
+//   },
+// });
+
 export const coinListQuery = selector({
   key: 'CoinListQuery',
   get: async () => {
