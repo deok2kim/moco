@@ -5,7 +5,7 @@ import {
   orderbookState,
   orderbookQuery,
   currentCoinState,
-} from '../state/state';
+} from '../states/state';
 
 import Orderbook from './Orderbook';
 

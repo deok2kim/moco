@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 
 import { useRecoilState } from 'recoil';
-import { coinListState } from '../state/state';
+import { coinListState } from '../states/state';
 import { fetchCoinList } from '../utils/api';
 
 export default function useCoinList() {

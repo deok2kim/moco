@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { coinInfoListQuery, coinListQuery, tickerState } from '../state/state';
+import { coinInfoListQuery, coinListQuery, tickerState } from '../states/state';
 import CoinList from './CoinList';
 
 function CoinListContainer() {

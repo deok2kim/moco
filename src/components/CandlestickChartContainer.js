@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 
 import { useRecoilValue } from 'recoil';
-import { fetchCandlestickInfo } from '../state/state';
+import { fetchCandlestickInfo } from '../states/state';
 
 import Chart from './Chart';
 

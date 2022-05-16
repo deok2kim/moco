@@ -5,7 +5,7 @@ import {
   currentCoinState,
   transactionQuery,
   transactionState,
-} from '../state/state';
+} from '../states/state';
 
 import Transaction from './Transaction';
 

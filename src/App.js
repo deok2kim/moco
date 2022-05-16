@@ -11,12 +11,13 @@ import CandlestickChartContainer from './components/CandlestickChartContainer';
 import CoinListContainer from './components/CoinListContainer';
 import TransactionContainer from './components/TransactionContainer';
 import OrderbookContainer from './components/OrderbookContainer';
+import Navagation from './components/Navigation';
 import {
   currentCoinState,
   tickerState,
   transactionState,
   currentCoinInfoState,
-} from './state/state';
+} from './states/state';
 
 // const socket = io.connect('wss://wss1.bithumb.com/public');
 
@@ -28,7 +29,6 @@ function App() {
   const currentCoin = useRecoilValue(currentCoinState);
   const setTransaction = useSetRecoilState(transactionState);
   const setTicker = useSetRecoilState(tickerState);
-
   const setCurrentCoinInfo = useSetRecoilState(currentCoinInfoState);
 
   useEffect(() => {
@@ -121,7 +121,9 @@ function App() {
   console.log('MOUNT APP');
   return (
     <Container>
-      <NavBar>NavBar</NavBar>
+      <NavBar>
+        <Navagation />
+      </NavBar>
       <SideBar>
         <Suspense fallback={<div>Loading...</div>}>
           <CoinListContainer />
