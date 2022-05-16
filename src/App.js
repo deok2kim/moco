@@ -18,6 +18,7 @@ import {
   transactionState,
   currentCoinInfoState,
 } from './states/state';
+import Loader from './components/Loader';
 
 // const socket = io.connect('wss://wss1.bithumb.com/public');
 
@@ -122,29 +123,29 @@ function App() {
   return (
     <Container>
       <NavBar>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loader type="spin" color="#FE9601" />}>
           <Navagation />
         </Suspense>
       </NavBar>
       <SideBar>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loader type="spin" color="#FE9601" />}>
           <CoinListContainer />
         </Suspense>
       </SideBar>
       <Main>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loader type="spin" color="#FE9601" />}>
           <CandlestickChartContainer />
         </Suspense>
       </Main>
       <SideBarRight>SideBar</SideBarRight>
       <ContentBox>
         <Content1>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader type="spin" color="#FE9601" />}>
             <TransactionContainer />
           </Suspense>
         </Content1>
         <Content2>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader type="spin" color="#FE9601" />}>
             <OrderbookContainer />
           </Suspense>
         </Content2>

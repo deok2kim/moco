@@ -8,6 +8,7 @@ import {
   tickerState,
 } from '../states/state';
 import CoinList from './CoinList';
+import Loader from './Loader';
 
 function CoinListContainer() {
   const coinInfoList = useRecoilValue(coinInfoListQuery);
@@ -35,13 +36,11 @@ function CoinListContainer() {
   }, []);
 
   return (
-    <Suspense fallback={<div>...Loading</div>}>
-      <CoinList
-        coinList={coinList.slice(1)}
-        ticker={ticker}
-        onChangeCurrentCoin={onChangeCurrentCoin}
-      />
-    </Suspense>
+    <CoinList
+      coinList={coinList.slice(1)}
+      ticker={ticker}
+      onChangeCurrentCoin={onChangeCurrentCoin}
+    />
   );
 }
 

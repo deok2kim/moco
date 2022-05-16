@@ -48,20 +48,7 @@ function OrderbookContainer() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   intervalObj.current = setInterval(async () => {
-  //     await refetchOrderbook();
-  //   }, 5000);
-  //   return () => {
-  //     clearInterval(intervalObj.current);
-  //     intervalObj.current = null;
-  //   };
-  // });
-  return (
-    <Suspense fallback={<div>...Loading</div>}>
-      <Orderbook orderbook={orderbook} />
-    </Suspense>
-  );
+  return <Orderbook orderbook={orderbook} />;
 }
 
 export default React.memo(OrderbookContainer);

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React from 'react';
 
 import { useRecoilValue } from 'recoil';
 import { fetchCandlestickInfo } from '../states/state';
@@ -6,7 +6,6 @@ import { fetchCandlestickInfo } from '../states/state';
 import Chart from './Chart';
 
 function CandlestickChartContainer() {
-  // const currentCoin = useRecoilValue();
   const candlestickInfo = useRecoilValue(fetchCandlestickInfo);
   /*
     시간
@@ -16,12 +15,7 @@ function CandlestickChartContainer() {
     저가
     거래량
   */
-  console.log('$CandlestickChartContainer: ', candlestickInfo);
-  return (
-    <Suspense fallback={<div>loading...</div>}>
-      <Chart candlestickInfo={candlestickInfo} />
-    </Suspense>
-  );
+  return <Chart candlestickInfo={candlestickInfo} />;
 }
 
 export default React.memo(CandlestickChartContainer);

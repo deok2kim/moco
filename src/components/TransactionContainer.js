@@ -26,11 +26,7 @@ function TransactionContainer() {
       setTransaction(getTransactionState.contents);
     }
   }, [getTransactionState]);
-  return (
-    <Suspense fallback={<div>...Loading</div>}>
-      <Transaction transaction={transaction} symbol={currentCoin.symbol} />
-    </Suspense>
-  );
+  return <Transaction transaction={transaction} symbol={currentCoin.symbol} />;
 }
 
 export default TransactionContainer;
