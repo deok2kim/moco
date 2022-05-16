@@ -61,7 +61,7 @@ const Body = styled(Header)`
   }
 `;
 
-function CoinList({ coinList, ticker }) {
+function CoinList({ coinList, ticker, onChangeCurrentCoin }) {
   // const tabList = ['원화 마켓', 'BTC 마켓', '보유자산', '즐겨찾기'];
   // const headerList = ['자산', '현재가', '변동률(24H)', '거래금액(24H)'];
   return (
@@ -110,7 +110,12 @@ function CoinList({ coinList, ticker }) {
             {coinList.map(
               coin =>
                 ticker[coin.coinType] && (
-                  <tr key={coin.coinSymbol}>
+                  <tr
+                    key={coin.coinSymbol}
+                    onClick={() =>
+                      onChangeCurrentCoin(coin.coinType, coin.coinSymbol)
+                    }
+                  >
                     <td>
                       <AiFillStar />
                       {coin.coinName}
@@ -128,11 +133,12 @@ function CoinList({ coinList, ticker }) {
   );
 }
 
-export default CoinList;
+export default React.memo(CoinList);
 
 CoinList.defaultProps = {
   coinList: [],
   ticker: {},
+  onChangeCurrentCoin: () => {},
 };
 
 /*
@@ -161,4 +167,5 @@ volumePower24H: "108.57"
 CoinList.propTypes = {
   coinList: PropTypes.arrayOf(PropTypes.object),
   ticker: PropTypes.objectOf(PropTypes.object),
+  onChangeCurrentCoin: PropTypes.func,
 };

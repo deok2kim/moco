@@ -91,7 +91,7 @@ function Transaction({ transaction, symbol }) {
                 <td>{formatNumber(t.contPrice)}</td>
                 <td>
                   <ColorTextBuySell color={t.buySellGb}>
-                    {t.contQty} {symbol}
+                    {formatNumber(t.contQty)}
                   </ColorTextBuySell>
                 </td>
               </tr>

@@ -6,5 +6,5 @@ export const formatNumber = num => {
   if (typeof num === 'string') {
     result = parseFloat(num);
   }
-  return result.toLocaleString('ko-kr');
+  return result.toLocaleString('ko-kr', { maximumFractionDigits: 4 });
 };

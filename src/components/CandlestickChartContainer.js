@@ -6,9 +6,8 @@ import { fetchCandlestickInfo } from '../states/state';
 import Chart from './Chart';
 
 function CandlestickChartContainer() {
-  const candlestickInfo = useRecoilValue(
-    fetchCandlestickInfo({ coinType: 'C0101' }),
-  );
+  // const currentCoin = useRecoilValue();
+  const candlestickInfo = useRecoilValue(fetchCandlestickInfo);
   /*
     시간
     시가

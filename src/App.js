@@ -122,7 +122,9 @@ function App() {
   return (
     <Container>
       <NavBar>
-        <Navagation />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Navagation />
+        </Suspense>
       </NavBar>
       <SideBar>
         <Suspense fallback={<div>Loading...</div>}>
@@ -166,7 +168,7 @@ const Container = styled.div`
   text-align: center;
   grid-gap: 1rem;
   transition: all 0.25s ease-in-out;
-  @media (max-width: 550px) {
+  @media (max-width: 390px) {
     /* width: 550px; */
     grid-template-columns: 1fr;
     grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 2.2fr 1fr;
@@ -190,15 +192,18 @@ const Main = styled.main`
   color: white;
   grid-area: main;
   padding: 0.25rem;
+  /* min-width: 450px; */
 `;
 const SideBar = styled.div`
   background: #2a3138;
   grid-area: sidebar;
   padding: 0.25rem;
+  /* min-width: 470px; */
 `;
 
 const SideBarRight = styled(SideBar)`
   grid-area: sidebarRight;
+  /* min-width: 470px; */
 `;
 
 const ContentBox = styled.div`
