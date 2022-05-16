@@ -1,12 +1,22 @@
 import React, { Suspense, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 // import { io } from 'socket.io-client';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil';
 import CandlestickChartContainer from './components/CandlestickChartContainer';
 import CoinListContainer from './components/CoinListContainer';
 import TransactionContainer from './components/TransactionContainer';
 import OrderbookContainer from './components/OrderbookContainer';
-import { currentCoinState, tickerState, transactionState } from './state/state';
+import {
+  currentCoinState,
+  tickerState,
+  transactionState,
+  currentCoinInfoState,
+} from './state/state';
 
 // const socket = io.connect('wss://wss1.bithumb.com/public');
 
@@ -18,6 +28,8 @@ function App() {
   const currentCoin = useRecoilValue(currentCoinState);
   const setTransaction = useSetRecoilState(transactionState);
   const setTicker = useSetRecoilState(tickerState);
+
+  const setCurrentCoinInfo = useSetRecoilState(currentCoinInfoState);
 
   useEffect(() => {
     if (!ws.current) {
@@ -48,31 +60,35 @@ function App() {
             },
           ]);
         } else if (data.subtype === 'tk') {
+          const coinData = {
+            // buyVolume: "3417.18586078",
+            chgAmt: data.content.a,
+            chgRate: data.content.r,
+            closePrice: data.content.e,
+            coinType: data.content.c,
+            // crncCd: "C0100",
+            // date: "20220514",
+            highPrice: data.content.h,
+            lowPrice: data.content.l,
+            openPrice: data.content.o,
+            prevClosePrice: data.content.f,
+            // sellVolume: "2694.9627182"
+            tickType: data.content.k,
+            // time: "010357"
+            value: data.content.u,
+            value24H: data.content.u24,
+            volume: data.content.v,
+            volume24H: data.content.v24,
+            volumePower: data.content.w,
+            // volumePower24H: "126.8"
+          };
+
+          if (currentCoin.type === data.content.c) {
+            setCurrentCoinInfo(coinData);
+          }
           setTicker(prev => ({
             ...prev,
-            [data.content.c]: {
-              ...prev[data.content.c],
-              // buyVolume: "3417.18586078",
-              chgAmt: data.content.a,
-              chgRate: data.content.r,
-              closePrice: data.content.e,
-              coinType: data.content.c,
-              // crncCd: "C0100",
-              // date: "20220514",
-              highPrice: data.content.h,
-              lowPrice: data.content.l,
-              openPrice: data.content.o,
-              prevClosePrice: data.content.f,
-              // sellVolume: "2694.9627182"
-              tickType: data.content.k,
-              // time: "010357"
-              value: data.content.u,
-              value24H: data.content.u24,
-              volume: data.content.v,
-              volume24H: data.content.v24,
-              volumePower: data.content.w,
-              // volumePower24H: "126.8"
-            },
+            [data.content.c]: { ...prev[data.content.c], ...coinData },
           }));
         }
       };

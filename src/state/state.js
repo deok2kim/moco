@@ -9,17 +9,17 @@ export const currentCoinState = atom({
   },
 });
 
-// export const currentCoinInfo = atom({
-//   key: 'CurrentCoinInfo',
-//   default: {
-//     price: '',
-//     rate: '',
-//     openPrice: '',
-//     highPrice: '',
-//     lowPrice: '',
-//     closePrice: '',
-//   },
-// });
+export const currentCoinInfoState = atom({
+  key: 'CurrentCoinInfo',
+  default: {
+    // price: '',
+    // rate: '',
+    // openPrice: '',
+    // highPrice: '',
+    // lowPrice: '',
+    // closePrice: '',
+  },
+});
 
 export const coinListQuery = selector({
   key: 'CoinListQuery',
@@ -129,12 +129,19 @@ export const orderbookQuery = selector({
 });
 
 // https://pub2.bithumb.com/public/candlesticknew/C0423_C0100/10M
+
+export const candlestickIntervalState = atom({
+  key: 'CandlestickInterval',
+  default: '1H',
+});
+
 export const fetchCandlestickInfo = selectorFamily({
   key: 'fetchCandlestickInfo',
   get:
-    ({ coinType, interval }) =>
+    ({ coinType }) =>
     async ({ get }) => {
-      console.log(interval);
+      const interval = get(candlestickIntervalState);
+      console.log('바뀐 인터벌', interval);
       const response = await axios.get(
         `https://pub2.bithumb.com/public/candlesticknew/${coinType}_C0100/${interval}`,
       );
@@ -145,7 +152,7 @@ export const fetchCandlestickInfo = selectorFamily({
           close: info[2],
           high: info[3],
           low: info[4],
-          value: info[5],
+          // value: info[5].toString(),
         }));
       }
       console.log(response.data.message);

@@ -7,7 +7,7 @@ import Chart from './Chart';
 
 function CandlestickChartContainer() {
   const candlestickInfo = useRecoilValue(
-    fetchCandlestickInfo({ coinType: 'C0101', interval: '1H' }),
+    fetchCandlestickInfo({ coinType: 'C0101' }),
   );
   /*
     시간
