@@ -19,6 +19,7 @@ import {
   currentCoinInfoState,
 } from './states/state';
 import Loader from './components/Loader';
+import ChatAndPostsContainer from './components/ChatAndPostsContainer';
 
 // const socket = io.connect('wss://wss1.bithumb.com/public');
 
@@ -137,7 +138,11 @@ function App() {
           <CandlestickChartContainer />
         </Suspense>
       </Main>
-      <SideBarRight>SideBar</SideBarRight>
+      <SideBarRight>
+        <Suspense fallback={<Loader type="spin" color="#FE9601" />}>
+          <ChatAndPostsContainer />
+        </Suspense>
+      </SideBarRight>
       <ContentBox>
         <Content1>
           <Suspense fallback={<Loader type="spin" color="#FE9601" />}>
@@ -163,16 +168,16 @@ const Container = styled.div`
   grid-template-rows: 0.2fr 1fr 0.8fr 0.5fr;
   grid-template-areas:
     'nav nav nav nav'
-    'sidebar main main   sidebarRight'
-    'sidebar content content  sidebarRight'
-    'footer footer footer  footer';
+    'sidebar main main sidebarRight'
+    'sidebar content content sidebarRight'
+    'footer footer footer footer';
   text-align: center;
   grid-gap: 1rem;
   transition: all 0.25s ease-in-out;
   @media (max-width: 390px) {
     /* width: 550px; */
     grid-template-columns: 1fr;
-    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 2.2fr 1fr;
+    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1.2fr 1fr;
     grid-template-areas:
       'nav'
       'main'

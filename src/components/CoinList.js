@@ -61,9 +61,23 @@ const Body = styled(Header)`
   }
 `;
 
-function CoinList({ coinList, ticker, onChangeCurrentCoin }) {
+const Name = styled.button`
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+`;
+
+function CoinList({
+  coinList,
+  ticker,
+  onChangeCurrentCoin,
+  toggleFavoriteCoin,
+}) {
   // const tabList = ['원화 마켓', 'BTC 마켓', '보유자산', '즐겨찾기'];
   // const headerList = ['자산', '현재가', '변동률(24H)', '거래금액(24H)'];
+  // console.log('coinList', coinList);
+  // console.log('ticker', ticker);
   return (
     <Container>
       <Title>체결 내역</Title>
@@ -101,8 +115,8 @@ function CoinList({ coinList, ticker, onChangeCurrentCoin }) {
       <div>
         <Body>
           <colgroup>
-            <col width="30%" />
-            <col width="25%" />
+            <col width="35%" />
+            <col width="20%" />
             <col width="20%" />
             <col width="25%" />
           </colgroup>
@@ -110,15 +124,19 @@ function CoinList({ coinList, ticker, onChangeCurrentCoin }) {
             {coinList.map(
               coin =>
                 ticker[coin.coinType] && (
-                  <tr
-                    key={coin.coinSymbol}
-                    onClick={() =>
-                      onChangeCurrentCoin(coin.coinType, coin.coinSymbol)
-                    }
-                  >
+                  <tr key={coin.coinSymbol}>
                     <td>
-                      <AiFillStar />
-                      {coin.coinName}
+                      <Name onClick={() => toggleFavoriteCoin(coin.coinSymbol)}>
+                        <AiFillStar />
+                      </Name>
+                      <Name
+                        type="button"
+                        onClick={() =>
+                          onChangeCurrentCoin(coin.coinType, coin.coinSymbol)
+                        }
+                      >
+                        {coin.coinName}
+                      </Name>
                     </td>
                     <td>{formatNumber(ticker[coin.coinType]?.closePrice)}</td>
                     <td>{ticker[coin.coinType]?.chgRate}%</td>
@@ -139,6 +157,7 @@ CoinList.defaultProps = {
   coinList: [],
   ticker: {},
   onChangeCurrentCoin: () => {},
+  toggleFavoriteCoin: () => {},
 };
 
 /*
@@ -168,4 +187,5 @@ CoinList.propTypes = {
   coinList: PropTypes.arrayOf(PropTypes.object),
   ticker: PropTypes.objectOf(PropTypes.object),
   onChangeCurrentCoin: PropTypes.func,
+  toggleFavoriteCoin: PropTypes.func,
 };
