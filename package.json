@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "http-proxy-middleware": "^2.0.6",
     "lightweight-charts": "^3.8.0",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
@@ -56,6 +57,6 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "2.6.2"
-  },
-  "proxy": "http://ec2-52-78-132-49.ap-northeast-2.compute.amazonaws.com"
+  }
+  
 }

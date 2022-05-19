@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { prevClosePriceState } from '../states/coin';
 import {
   coinInfoListQuery,
   coinListQuery,
@@ -14,7 +15,7 @@ function CoinListContainer() {
   const coinInfoList = useRecoilValue(coinInfoListQuery);
   const coinList = useRecoilValue(coinListQuery);
   const [ticker, setTicker] = useRecoilState(tickerState);
-
+  const setPrevClosePrice = useSetRecoilState(prevClosePriceState);
   const [currentCoin, setCurrentCoin] = useRecoilState(currentCoinState);
 
   // console.log('$CoinListContainer');
@@ -29,6 +30,7 @@ function CoinListContainer() {
         symbol,
       });
     }
+    setPrevClosePrice(coinInfoList.ticker[type].prevClosePrice);
   };
 
   const toggleFavoriteCoin = symbol => {
@@ -38,9 +40,10 @@ function CoinListContainer() {
 
   useEffect(() => {
     if (Object.keys(ticker).length === 0) {
-      console.log('야');
       setTicker(coinInfoList.ticker);
+      console.log('coinInfo', coinInfoList);
     }
+    setPrevClosePrice(coinInfoList.ticker[currentCoin.type].prevClosePrice);
   }, []);
 
   return (

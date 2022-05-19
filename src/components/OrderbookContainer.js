@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useRef } from 'react';
 
-import { useRecoilState, useRecoilStateLoadable } from 'recoil';
+import { useRecoilState, useRecoilStateLoadable, useRecoilValue } from 'recoil';
+
 import {
   orderbookState,
   orderbookQuery,

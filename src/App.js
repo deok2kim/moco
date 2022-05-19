@@ -33,6 +33,31 @@ function App() {
   const setTicker = useSetRecoilState(tickerState);
   const setCurrentCoinInfo = useSetRecoilState(currentCoinInfoState);
 
+  const chatWerSocketUrl = '';
+  const chatWs = useRef(null);
+
+  // useEffect(() => {
+  //   if (!chatWerSocketUrl) {
+  //     chatWs.current = new WebSocket(chatWerSocketUrl);
+  //     chatWs.current.onopen = () => {
+  //       console.log(`CONNECTED TO ${chatWerSocketUrl}`);
+  //       setSocketConnected(true);
+  //     };
+  //     chatWs.current.close = error => {
+  //       console.log(`DISCONNECT from ${chatWerSocketUrl}`);
+  //       console.log(error);
+  //     };
+  //     chatWs.current.onmessage = e => {
+  //       const data = JSON.parse(e.data);
+  //       console.log('chat', data);
+  //     };
+  //   }
+  //   return () => {
+  //     console.log(`CLEAN UP ${chatWerSocketUrl}`);
+  //     chatWs.current.close();
+  //   };
+  // });
+
   useEffect(() => {
     if (!ws.current) {
       ws.current = new WebSocket(webSocketUrl);

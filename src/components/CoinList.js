@@ -76,6 +76,7 @@ function CoinList({
 }) {
   // const tabList = ['원화 마켓', 'BTC 마켓', '보유자산', '즐겨찾기'];
   // const headerList = ['자산', '현재가', '변동률(24H)', '거래금액(24H)'];
+  // console.log('$CoinList');
   // console.log('coinList', coinList);
   // console.log('ticker', ticker);
   return (
