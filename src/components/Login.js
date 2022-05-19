@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { isModalOpenState } from '../states/modal';
-import { userState } from '../states/users';
+import { LoginState, userState } from '../states/users';
 import { apiLogin } from '../utils/api';
 import Signup from './Signup';
 
@@ -51,6 +51,7 @@ function Login() {
     id: '',
     pw: '',
   });
+  const setIsLoggedIn = useSetRecoilState(LoginState);
 
   const { id, pw } = inputs;
 
@@ -66,8 +67,9 @@ function Login() {
     console.log('로그인요청!', id, pw);
     const response = await apiLogin({ userid: id, password: pw });
     const { userid: userId, accessToken: token } = response.data;
-    localStorage.setItem('user', JSON.stringify({ userId, token }));
+    localStorage.setItem('token', token);
     setUser(userId);
+    setIsLoggedIn(true);
     setIsModalOpen('');
     console.log(response);
   };

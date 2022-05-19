@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from 'recoil';
 import styled from 'styled-components';
 import Posts from './Posts';
 import Pagination from './Pagination';
 
 import { isModalOpenState } from '../../states/modal';
 import { postsState } from '../../states/posts';
+import { LoginState } from '../../states/users';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -34,9 +40,16 @@ function PostsContainer() {
   const [page, setPage] = useState(1);
   const [postLength, setPostLength] = useState(1);
 
+  // 로그인 상태
+  const isLoggedIn = useRecoilValue(LoginState);
+
   const setIsModalOpen = useSetRecoilState(isModalOpenState);
 
   const onToggleModal = target => {
+    if (!isLoggedIn) {
+      alert('로그인 후 이용해주세요.');
+      return;
+    }
     console.log('POST MODAL OPEN');
     setIsModalOpen(prev => target);
   };
