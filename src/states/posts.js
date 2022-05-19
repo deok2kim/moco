@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { apiFetchBoard, apiFetchBoards, apiFetchReply } from '../utils/api';
 
 // export const postsState = selectorFamily({
 //   key: "Posts",
@@ -16,6 +17,8 @@ export const postsState = selector({
   key: 'Posts',
   get: async ({ get }) => {
     const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    // const response = await apiFetchBoards();
+    // return response
     return response.json();
   },
 });
@@ -32,6 +35,8 @@ export const postState = selector({
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${id}`,
     );
+    // const response = await apiFetchBoard({ id });
+    // return response
     return response.json();
   },
 });
@@ -41,9 +46,10 @@ export const commentsState = selector({
   get: async ({ get }) => {
     const id = get(currentPostIdState);
     const response = await fetch(
-      // `https://jsonplaceholder.typicode.com/posts/${id}/comments`
       `https://jsonplaceholder.typicode.com/posts/${id}/comments`,
     );
+    // const response = await apiFetchReply({ id });
+    // return response;
     return response.json();
   },
 });

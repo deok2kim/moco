@@ -12,24 +12,31 @@ import Signup from './Signup';
 import PostContainer from './posts/PostContainer';
 
 const Wrapper = styled.div`
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: end; */
-  /* align-items: end; */
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  background: #1d2124;
+  height: 100%;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: end;
+  width: 10%;
 `;
 
 const Button = styled.button`
   border: none;
   background-color: transparent;
-  /* margin-right: 10px; */
-
   cursor: pointer;
 `;
+
+const Logo = styled.h1`
+  font-size: 40px;
+  width: 90%;
+  margin-left: 130px;
+`;
+
 function Navagation() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModalOpenState);
   const [user, setUser] = useRecoilState(userState);
@@ -39,9 +46,7 @@ function Navagation() {
   };
   return (
     <Wrapper>
-      <div>로고</div>
-      <div>로고</div>
-      <div>로고</div>
+      <Logo>NIOC 433</Logo>
       <ButtonWrapper>
         {!user && (
           <Button type="button" onClick={() => toggleModal('login')}>

@@ -51,12 +51,13 @@ function Signup() {
     });
   };
 
-  const signUp = () => {
+  const signUp = async () => {
     if (pw !== pw2) {
       console.log('비밀번호 확인');
     } else {
       console.log('회원가입요청!', id, pw, userName);
-      apiSignup({ id, pw, userName });
+      const resposne = await apiSignup({ id, pw, userName });
+      console.log(resposne);
     }
   };
 

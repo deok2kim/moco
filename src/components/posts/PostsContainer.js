@@ -11,6 +11,20 @@ const Wrapper = styled.div`
   height: 100%;
   overflow-y: scroll;
   overflow-x: none;
+  display: flex;
+  flex-direction: column;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const Button = styled.button`
+  margin: 1rem;
+  width: 20%;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #06da25;
+  border: 1px solid #06da25;
 `;
 
 function PostsContainer() {
@@ -42,9 +56,7 @@ function PostsContainer() {
   console.log(posts);
   return (
     <Wrapper>
-      <button type="button" onClick={() => onToggleModal('createPost')}>
-        글쓰기
-      </button>
+      <Button onClick={() => onToggleModal('createPost')}>+ Add</Button>
       {state === 'loading' && <div>...Loading</div>}
       {state === 'hasError' && <div>...Error</div>}
       {state === 'hasValue' && (

@@ -2,12 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-// import { isModalOpenState } from "../states/modal";
 import { currentPostIdState } from '../../states/posts';
 
 const Wrapper = styled.div`
-  margin: 1rem;
-  border-bottom: 1px solid gray;
+  margin: 0.8rem 1rem;
   cursor: pointer;
   &:hover {
     font-weight: bold;

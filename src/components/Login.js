@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { isModalOpenState } from '../states/modal';
+import { userState } from '../states/users';
+import { apiLogin } from '../utils/api';
 import Signup from './Signup';
 
 const Wrapper = styled.div`
@@ -43,6 +45,7 @@ const SignupText = styled.p`
 `;
 function Login() {
   console.log('$LOGIN');
+  const setUser = useSetRecoilState(userState);
   const setIsModalOpen = useSetRecoilState(isModalOpenState);
   const [inputs, setInputs] = useState({
     id: '',
@@ -59,8 +62,14 @@ function Login() {
     });
   };
 
-  const login = () => {
+  const login = async () => {
     console.log('로그인요청!', id, pw);
+    const response = await apiLogin({ userid: id, password: pw });
+    const { userid: userId, accessToken: token } = response.data;
+    localStorage.setItem('user', JSON.stringify({ userId, token }));
+    setUser(userId);
+    setIsModalOpen('');
+    console.log(response);
   };
 
   const onOpenSignupModal = () => {

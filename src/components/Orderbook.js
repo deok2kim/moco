@@ -11,24 +11,15 @@ const Container = styled.div`
   div {
     overflow-y: scroll;
     height: 30vh;
-    &::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: #fff;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #999;
-      border-radius: 10px;
-      background-clip: padding-box;
-      border: 1px solid transparent;
+    ::-webkit-scrollbar {
+      display: none;
     }
   }
 `;
 
 const Title = styled.p`
   color: inherit;
+  font-size: 15px;
 `;
 
 const Header = styled.table`
@@ -44,7 +35,7 @@ const Header = styled.table`
 
 const Body = styled(Header)`
   tr {
-    background-color: ${props => props.color};
+    background-color: #1d2124;
     td:first-child {
       text-align: start;
     }

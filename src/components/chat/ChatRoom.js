@@ -5,13 +5,16 @@ import PropTypes from 'prop-types';
 import { BiSubdirectoryLeft } from 'react-icons/bi';
 
 const Wrapper = styled.div`
-  height: 35%;
+  height: 20%;
 `;
 
 const MessageDisplay = styled.div`
   height: 80%;
   overflow-y: scroll;
   padding: 0.2rem;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const MessageBox = styled.div`
@@ -21,35 +24,39 @@ const MessageBox = styled.div`
 `;
 
 const Message = styled.p`
-  font-size: 0.5rem;
-  background-color: brown;
+  font-size: 14px;
+  background-color: #536469;
   border-radius: 0.3rem;
-  margin: 0.1rem;
-  padding: 0.2rem;
+  margin: 3px 12px;
+  padding: 0.3rem;
 `;
 
 const UserName = styled.p`
   font-size: 0.5rem;
-  border-top: 1px solid blue;
+  /* border-bottom: 1px solid #ff9e21; */
+  margin: 5px 8px;
 `;
 
 const Time = styled.p`
-  font-size: 0.3rem;
+  font-size: 0.5rem;
+  margin: 3px 14px;
+  color: #585e5e;
 `;
 
 const MessageInput = styled.div``;
 
 const InputWrapper = styled.div`
-  /* border: 1px solid black; */
+  border: 1px solid black;
   display: flex;
-  border-radius: 5px;
-  width: 80%;
+  border-radius: 2px;
+  width: 90%;
   margin: 0.5rem;
   background-color: ${props => props.color || 'rgb(234 234 234)'};
   justify-content: space-between;
 `;
 
 const Input = styled.input`
+  height: 10%;
   border: none;
   background-color: transparent;
   &:focus {

@@ -6,7 +6,7 @@ import PostsContainer from './posts/PostsContainer';
 
 const Wrapper = styled.div`
   padding: 1rem;
-  /* background-color: inherit; */
+  background-color: inherit;
   height: 95%;
 `;
 
@@ -17,21 +17,21 @@ const Tabs = styled.div`
 `;
 
 const Tab = styled.div`
-  border: 1px solid red;
+  border: 1px solid #585e5e;
   border-bottom: ${props => props.active && 'none'};
   width: 100%;
   text-align: center;
   padding: 1rem;
   font-size: 1rem;
   font-weight: 500;
-  color: ${props => (props.active ? 'inherit' : 'gray')};
+  color: ${props => (props.active ? '#FF9E21' : '#585e5e')};
 `;
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  border: 1px solid red;
+  border: 1px solid #585e5e;
   border-top: none;
   height: 100%;
   /* padding-bottom: 5rem; */

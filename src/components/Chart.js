@@ -49,8 +49,8 @@ function Chart({ candlestickInfo }) {
     console.log(chart.current);
 
     cs.current = chart.current.addCandlestickSeries({
-      upColor: '#4bffb5',
-      downColor: '#ff4976',
+      upColor: '#06da25',
+      downColor: '#FC4949',
       borderDownColor: '#ff4976',
       borderUpColor: '#4bffb5',
       wickDownColor: '#838ca1',

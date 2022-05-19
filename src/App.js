@@ -214,19 +214,21 @@ const Container = styled.div`
   color: white;
 `;
 const NavBar = styled.nav`
-  background: #3a3a55;
+  background: #1d2124;
   grid-area: nav;
   padding: 0.25rem;
+  margin-bottom: 30px;
+  margin-top: 20px;
 `;
 const Main = styled.main`
-  background: #1f2128;
+  background: #1d2124;
   color: white;
   grid-area: main;
   padding: 0.25rem;
   /* min-width: 450px; */
 `;
 const SideBar = styled.div`
-  background: #2a3138;
+  background: #252e30;
   grid-area: sidebar;
   padding: 0.25rem;
   /* min-width: 470px; */
@@ -240,7 +242,6 @@ const SideBarRight = styled(SideBar)`
 const ContentBox = styled.div`
   display: flex;
   column-gap: 0.5rem;
-  padding: 0.25rem;
   align-items: center;
   grid-area: content;
   justify-content: center;
@@ -249,16 +250,21 @@ const ContentBox = styled.div`
   }
 `;
 const Content1 = styled.div`
-  background: #2a3138;
+  background: #1d2124;
   padding: 0.25rem;
   width: 100%;
   height: 100%;
+  margin-right: 5px;
 `;
-const Content2 = styled(Content1)``;
-// const Content3 = styled(Content1)``;
+const Content2 = styled(Content1)`
+  margin-right: 0px;
+  margin-left: 5px;
+`;
+
 const Footer = styled.footer`
-  background: #ff9637;
+  background: #1d2124;
   grid-area: footer;
   padding: 0.25rem;
+  margin-top: 30px;
 `;
 export default App;
