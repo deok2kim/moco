@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
 import ChatContainer from './chat/ChatContainer';
 import PostsContainer from './posts/PostsContainer';
 
@@ -37,7 +38,7 @@ const Content = styled.div`
   /* padding-bottom: 5rem; */
 `;
 
-function ChatAndPostsContainer() {
+function ChatAndPostsContainer({ chatPublish }) {
   const [activeTab, setActiveTab] = useState('chat');
 
   const onChangeTab = tab => {
@@ -59,10 +60,22 @@ function ChatAndPostsContainer() {
         </Tab>
       </Tabs>
       <Content>
-        {activeTab === 'chat' ? <ChatContainer /> : <PostsContainer />}
+        {activeTab === 'chat' ? (
+          <ChatContainer chatPublish={chatPublish} />
+        ) : (
+          <PostsContainer />
+        )}
       </Content>
     </Wrapper>
   );
 }
 
 export default ChatAndPostsContainer;
+
+ChatAndPostsContainer.defaultProps = {
+  chatPublish: () => {},
+};
+
+ChatAndPostsContainer.propTypes = {
+  chatPublish: PropTypes.func,
+};

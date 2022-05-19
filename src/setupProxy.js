@@ -7,9 +7,10 @@ module.exports = app => {
       changeOrigin: true,
       ws: true,
       router: {
-        '/v2': 'wss://wss1.bithumb.com/public',
+        '/v3': 'wss://wss1.bithumb.com/public',
+        '/v2': 'http://ec2-43-200-3-180.ap-northeast-2.compute.amazonaws.com',
       },
-      pathRewrite: { '^/v2': '', '^/api': '' },
+      pathRewrite: { '^/v2': '', '^/api': '', '^/v3': '' },
     }),
   );
 };

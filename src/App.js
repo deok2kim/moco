@@ -1,12 +1,9 @@
 import React, { Suspense, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 // import { io } from 'socket.io-client';
-import {
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import * as SockJS from 'sockjs-client';
+import * as StompJs from '@stomp/stompjs';
 import CandlestickChartContainer from './components/CandlestickChartContainer';
 import CoinListContainer from './components/CoinListContainer';
 import TransactionContainer from './components/TransactionContainer';
@@ -21,6 +18,7 @@ import {
 import Loader from './components/Loader';
 import ChatAndPostsContainer from './components/ChatAndPostsContainer';
 import { LoginState, userState } from './states/users';
+import { chatLogState, chatRoomState } from './states/chat';
 
 // const socket = io.connect('wss://wss1.bithumb.com/public');
 
@@ -33,33 +31,86 @@ function App() {
   const setTransaction = useSetRecoilState(transactionState);
   const setTicker = useSetRecoilState(tickerState);
   const setCurrentCoinInfo = useSetRecoilState(currentCoinInfoState);
+  const chatRoom = useRecoilValue(chatRoomState);
+  const setChatLog = useSetRecoilState(chatLogState);
 
-  const chatWerSocketUrl = '';
-  const chatWs = useRef(null);
-
-  // useEffect(() => {
-  //   if (!chatWerSocketUrl) {
-  //     chatWs.current = new WebSocket(chatWerSocketUrl);
-  //     chatWs.current.onopen = () => {
-  //       console.log(`CONNECTED TO ${chatWerSocketUrl}`);
-  //       setSocketConnected(true);
-  //     };
-  //     chatWs.current.close = error => {
-  //       console.log(`DISCONNECT from ${chatWerSocketUrl}`);
-  //       console.log(error);
-  //     };
-  //     chatWs.current.onmessage = e => {
-  //       const data = JSON.parse(e.data);
-  //       console.log('chat', data);
-  //     };
-  //   }
-  //   return () => {
-  //     console.log(`CLEAN UP ${chatWerSocketUrl}`);
-  //     chatWs.current.close();
-  //   };
-  // });
   const setIsLoggedIn = useSetRecoilState(LoginState);
-  const setUser = useSetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
+
+  // 채팅 웹소켓
+  const client = useRef({});
+
+  const chatSubscribe = async () => {
+    console.log('구독');
+    client.current.subscribe(`/topic/chat/room/${chatRoom}`, message => {
+      console.log(message);
+      const res = JSON.parse(message.body);
+      console.log(res);
+      const now = new Date();
+      setChatLog(prev => [
+        ...prev,
+        {
+          userId: res.sender,
+          message: res.message,
+          index: now.getTime(),
+          time: `${now.getHours()}:${now.getMinutes()}`,
+        },
+      ]);
+    });
+
+    // 입장하기
+    client.current.publish({
+      destination: '/app/chat/message',
+      body: JSON.stringify({
+        type: 'ENTER',
+        roomId: chatRoom,
+        sender: user,
+      }),
+    });
+  };
+  const chatConnect = () => {
+    client.current = new StompJs.Client({
+      webSocketFactory: () => new SockJS('/v2/ws/chat'),
+      reconnectDelay: 10000,
+      heartbeatIncoming: 8000,
+      heartbeatOutgoing: 8000,
+      onConnect: () => {
+        chatSubscribe();
+      },
+      onStompError: frame => {
+        console.error(frame);
+      },
+    });
+    client.current.activate();
+  };
+
+  const chatDisconnect = () => {
+    client.current.deactivate();
+  };
+
+  // 메시지 보내기
+  const chatPublish = message => {
+    if (!client.current.connected) {
+      return;
+    }
+    client.current.publish({
+      destination: '/app/chat/message',
+      body: JSON.stringify({
+        type: 'TALK',
+        roomId: chatRoom,
+        sender: user,
+        message,
+      }),
+    });
+  };
+
+  useEffect(() => {
+    chatConnect();
+
+    return () => chatDisconnect();
+  }, [user]);
+
+  // 로그인 체크
   useEffect(() => {
     // 로그인 체크
     const storedToken = localStorage.getItem('token');
@@ -71,6 +122,7 @@ function App() {
     }
   });
 
+  // 코인 웹소켓 초기화
   useEffect(() => {
     if (!ws.current) {
       ws.current = new WebSocket(webSocketUrl);
@@ -139,6 +191,7 @@ function App() {
     };
   }, []);
 
+  // 코인 웹소켓 구독
   useEffect(() => {
     if (socketConnected) {
       console.log('SEND!');
@@ -178,7 +231,7 @@ function App() {
       </Main>
       <SideBarRight>
         <Suspense fallback={<Loader type="spin" color="#FE9601" />}>
-          <ChatAndPostsContainer />
+          <ChatAndPostsContainer chatPublish={chatPublish} />
         </Suspense>
       </SideBarRight>
       <ContentBox>
