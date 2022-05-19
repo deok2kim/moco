@@ -1,8 +1,9 @@
 import styled, { keyframes } from 'styled-components';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Suspense } from 'react';
 import { useRecoilState } from 'recoil';
 import { PropTypes } from 'prop-types';
 import { isModalOpenState } from '../states/modal';
+import Loader from './Loader';
 
 // animations
 const fadeIn = keyframes`
@@ -46,6 +47,7 @@ const Section = styled.section`
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: ${props => (props.isModalOpen ? fadeIn : fadeOut)} 0.2s ease-out;
   overflow: hidden;
+  border: 1px solid orange;
 `;
 
 const Header = styled.header`
@@ -73,26 +75,29 @@ const HeaderClose = styled.button`
 
 const Main = styled.main`
   padding: 16px;
-  border-bottom: 1px solid #dee2e6;
+  /* border-bottom: 1px solid #dee2e6; */
   border-top: 1px solid #dee2e6;
   overflow-y: auto;
-  height: 100%;
+  height: 90%;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-const Footer = styled.footer`
-  padding: 12px 16px;
-  text-align: right;
-`;
+// const Footer = styled.footer`
+//   padding: 12px 16px;
+//   text-align: right;
+// `;
 
-const FooterButton = styled.button`
-  padding: 6px 12px;
-  color: #fff;
-  background-color: #6c757d;
-  border-radius: 5px;
-  font-size: 13px;
-  border: none;
-  cursor: pointer;
-`;
+// const FooterButton = styled.button`
+//   padding: 6px 12px;
+//   color: #fff;
+//   background-color: #6c757d;
+//   border-radius: 5px;
+//   font-size: 13px;
+//   border: none;
+//   cursor: pointer;
+// `;
 
 function Modal({ component, header }) {
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModalOpenState);
@@ -122,11 +127,11 @@ function Modal({ component, header }) {
           <HeaderClose onClick={onClose}>&times;</HeaderClose>
         </Header>
         <Main>{component}</Main>
-        <Footer>
+        {/* <Footer>
           <FooterButton type="button" onClick={onClose}>
             Close
           </FooterButton>
-        </Footer>
+        </Footer> */}
       </Section>
     </Wrapper>
   );

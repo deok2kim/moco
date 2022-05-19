@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 
+import { CgProfile } from 'react-icons/cg';
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   border-bottom: 1px solid gray;
+  padding: 1rem 0;
 `;
 
 const ProfileWrapper = styled.div`
@@ -34,16 +37,18 @@ const CommentEtcInfo = styled.div`
 `;
 
 function Comment({ comment }) {
-  const { postId, id, name, email, body } = comment;
+  const { boardid, index, userid, useyn, replycontent, createdt } = comment;
   return (
     <Wrapper>
       <ProfileWrapper>
-        <ProfileImg>👨</ProfileImg>
-        <Name>NickName</Name>
+        <ProfileImg>
+          <CgProfile size="2rem" />
+        </ProfileImg>
+        <Name>{userid}</Name>
       </ProfileWrapper>
       <ContentWrapper>
-        <Content>{body}</Content>
-        <CommentEtcInfo>{email} 22.05.17</CommentEtcInfo>
+        <Content>{replycontent}</Content>
+        <CommentEtcInfo>{createdt.split('T').join(' ')}</CommentEtcInfo>
       </ContentWrapper>
     </Wrapper>
   );

@@ -10,6 +10,7 @@ import Login from './Login';
 import Modal from './Modal';
 import Signup from './Signup';
 import PostContainer from './posts/PostContainer';
+import PostForm from './posts/PostForm';
 
 const Wrapper = styled.div`
   padding: 15px;
@@ -62,6 +63,9 @@ function Navagation() {
       )}
       {isModalOpen === 'post' && (
         <Modal component={<PostContainer />} header="게시글" />
+      )}
+      {isModalOpen === 'createPost' && (
+        <Modal component={<PostForm />} header="글쓰기" />
       )}
     </Wrapper>
   );

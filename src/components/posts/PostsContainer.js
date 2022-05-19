@@ -12,6 +12,7 @@ import Pagination from './Pagination';
 import { isModalOpenState } from '../../states/modal';
 import { postsState } from '../../states/posts';
 import { LoginState } from '../../states/users';
+import Loader from '../Loader';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -70,13 +71,17 @@ function PostsContainer() {
   return (
     <Wrapper>
       <Button onClick={() => onToggleModal('createPost')}>+ Add</Button>
-      {state === 'loading' && <div>...Loading</div>}
+      {state === 'loading' && <Loader type="spin" color="#FE9601" />}
       {state === 'hasError' && <div>...Error</div>}
       {state === 'hasValue' && (
         <>
           <ul style={{ margin: 0 }}>
             {posts.map(post => (
-              <Posts key={post.id} post={post} onToggleModal={onToggleModal} />
+              <Posts
+                key={post.index}
+                post={post}
+                onToggleModal={onToggleModal}
+              />
             ))}
           </ul>
           {/* <Pagination

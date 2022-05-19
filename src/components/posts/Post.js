@@ -1,31 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { AiFillLike, AiFillDislike } from 'react-icons/ai';
 import CommentsContainer from '../comments/CommentsContainer';
-import CommentForm from '../comments/CommentForm';
+import { apiToggleLikeBoard } from '../../utils/api';
 
 const Wrapper = styled.div`
-  /* background-color: black; */
   text-align: start;
 `;
 
 const Title = styled.p`
   font-size: 1.5rem;
-  margin: 0.5rem;
+  margin: 1rem;
 `;
 
 const UserAndCreateDate = styled.p`
   font-size: 0.5rem;
-  margin: 0.5rem;
+  margin: 1rem;
 `;
 
 const Content = styled.p`
   font-size: 1rem;
-  margin: 0.5rem;
+  margin: 1rem;
 `;
 
 const Like = styled.div`
-  margin: 0.5rem;
+  margin: 1rem;
+`;
+
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
 `;
 
 function Post({ post }) {
@@ -34,28 +41,30 @@ function Post({ post }) {
     if (isLike) {
       // /board/addLike
       console.log('좋아요');
+      apiToggleLikeBoard({ index: post.id }, 'addLike');
     } else {
       // /board/addDisLike
       console.log('싫어요');
+      apiToggleLikeBoard({ index: post.id }, 'addDisLike');
     }
   };
   console.log(post);
   return (
     <Wrapper>
-      <Title>
-        {post.id}: {post.title}{' '}
-      </Title>
-      <UserAndCreateDate>작성자: {post.userId}, 작성일시: X</UserAndCreateDate>
+      <Title>{post.title}</Title>
+      <UserAndCreateDate>
+        작성자: {post.userId}, 작성일시: {post.createdt}
+      </UserAndCreateDate>
       <Content>
-        <span>{post.body}</span>
+        <span>{post.contents}</span>
       </Content>
       <Like>
-        <button type="button" onClick={() => onToggleLike(true)}>
-          🤍
-        </button>
-        <button type="button" onClick={() => onToggleLike(false)}>
-          💔
-        </button>
+        <Button type="button" onClick={() => onToggleLike(true)}>
+          <AiFillLike /> {post.conlike}
+        </Button>
+        <Button type="button" onClick={() => onToggleLike(false)}>
+          <AiFillDislike /> {post.condislike}
+        </Button>
       </Like>
       <hr />
       <CommentsContainer />

@@ -19,7 +19,7 @@ export async function apiLogin(data) {
 export async function apiFetchBoards() {
   const response = await axios({
     method: 'get',
-    url: '/api/board/community',
+    url: '/api/boards/community',
   });
   return response;
 }
@@ -39,10 +39,15 @@ export async function apiFetchReply(data) {
   return response;
 }
 export async function apiCreateBoard(data, boardName) {
+  const { token } = JSON.parse(localStorage.getItem('token'));
+
   const response = await axios({
     method: 'post',
     url: `/api/boards/${boardName}/write`, // 보드네임: 현재는 커뮤니티만
     data,
+    headers: {
+      token: `Bearer ${token}`,
+    },
   });
   return response;
 }
@@ -54,7 +59,7 @@ export async function apiCreateReply(data) {
   });
   return response;
 }
-export async function apiToggleLike(data, isLike) {
+export async function apiToggleLikeBoard(data, isLike) {
   // isLike: addLike, dislike
   const response = await axios({
     method: 'post',

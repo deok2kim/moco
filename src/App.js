@@ -20,6 +20,7 @@ import {
 } from './states/state';
 import Loader from './components/Loader';
 import ChatAndPostsContainer from './components/ChatAndPostsContainer';
+import { LoginState, userState } from './states/users';
 
 // const socket = io.connect('wss://wss1.bithumb.com/public');
 
@@ -57,6 +58,18 @@ function App() {
   //     chatWs.current.close();
   //   };
   // });
+  const setIsLoggedIn = useSetRecoilState(LoginState);
+  const setUser = useSetRecoilState(userState);
+  useEffect(() => {
+    // 로그인 체크
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      const { userId } = JSON.parse(storedToken);
+      setIsLoggedIn(true);
+      setUser(userId);
+      // setUser
+    }
+  });
 
   useEffect(() => {
     if (!ws.current) {

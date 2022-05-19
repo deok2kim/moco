@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValueLoadable } from 'recoil';
-// import styled from 'styled-components';
 import { commentsState } from '../../states/posts';
+import Loader from '../Loader';
 import CommentForm from './CommentForm';
 import Comments from './Comments';
 
@@ -12,7 +12,7 @@ function CommentsContainer() {
   return (
     <>
       <CommentForm />
-      {state === 'loading' && <div>...Loading</div>}
+      {state === 'loading' && <Loader type="spin" color="#FE9601" />}
       {state === 'hasError' && <div>...Error</div>}
       {state === 'hasValue' && <Comments comments={comments} />}
     </>

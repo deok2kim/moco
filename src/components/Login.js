@@ -67,7 +67,7 @@ function Login() {
     console.log('로그인요청!', id, pw);
     const response = await apiLogin({ userid: id, password: pw });
     const { userid: userId, accessToken: token } = response.data;
-    localStorage.setItem('token', token);
+    localStorage.setItem('token', JSON.stringify({ userId, token }));
     setUser(userId);
     setIsLoggedIn(true);
     setIsModalOpen('');

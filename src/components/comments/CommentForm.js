@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import styeld from 'styled-components';
+import { commentsState, currentPostIdState } from '../../states/posts';
+import { userState } from '../../states/users';
+import { apiCreateBoard, apiCreateReply, apiFetchReply } from '../../utils/api';
 
 const Wrapper = styeld.div`
   display: flex;
@@ -29,22 +33,39 @@ const CreateButton = styeld.div`
 `;
 
 function CommentForm() {
-  const [text, setText] = useState('');
+  const [replycontent, setReplycontent] = useState('');
+  const currentPostId = useRecoilValue(currentPostIdState);
+  const user = useRecoilValue(userState);
+  const refreshComment = useRecoilRefresher_UNSTABLE(commentsState);
   console.log('$CommentForm');
 
   const onChange = e => {
-    setText(e.target.value);
+    setReplycontent(e.target.value);
   };
 
-  const onCreate = () => {
+  const onCreate = async () => {
     // 댓글 생성
-    console.log('댓글 생성', text);
-    setText('');
+    console.log('댓글 생성', replycontent);
+    if (replycontent.trim() && user) {
+      await apiCreateReply({
+        boardid: currentPostId,
+        userid: user,
+        replycontent,
+      });
+      refreshComment();
+    }
+    setReplycontent('');
   };
 
   return (
     <Wrapper>
-      <Form name="text" value={text} onChange={onChange} rows={5} />
+      <Form
+        name="replycontent"
+        value={replycontent}
+        onChange={onChange}
+        rows={5}
+        disabled={!user}
+      />
       <CreateButton onClick={onCreate}>등록</CreateButton>
     </Wrapper>
   );

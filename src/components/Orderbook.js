@@ -57,7 +57,7 @@ const ColorTextBuySell = styled.span`
 function Orderbook({ orderbook }) {
   const prevClosePrice = useRecoilValue(prevClosePriceState);
   const currentCoin = useRecoilValue(currentCoinState);
-  console.log(orderbook, prevClosePrice);
+  // console.log(orderbook, prevClosePrice);
   const calRate = price => {
     const rate = ((price - prevClosePrice) / prevClosePrice) * 100;
 

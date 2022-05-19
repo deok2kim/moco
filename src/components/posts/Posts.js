@@ -22,15 +22,15 @@ function Posts({ post, onToggleModal }) {
   // const setIsModalOpen = useSetRecoilState(isModalOpenState);
 
   const onClick = () => {
-    if (post.id) {
-      setCurrentPostId(post.id);
+    if (post.index) {
+      setCurrentPostId(post.index);
       onToggleModal('post');
     }
   };
   return (
     <Wrapper>
       <Title type="button" onClick={onClick}>
-        {post.id}. {post.title}
+        {post.index}. {post.title}
       </Title>
     </Wrapper>
   );
