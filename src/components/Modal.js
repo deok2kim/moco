@@ -78,7 +78,7 @@ const Main = styled.main`
   /* border-bottom: 1px solid #dee2e6; */
   border-top: 1px solid #dee2e6;
   overflow-y: auto;
-  height: 90%;
+  /* height: 90%; */
   ::-webkit-scrollbar {
     display: none;
   }

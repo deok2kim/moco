@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { apiSignup } from '../utils/api';
+import { isModalOpenState } from '../states/modal';
+import { LoginState, userState } from '../states/users';
+import { apiLogin, apiSignup } from '../utils/api';
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,6 +36,10 @@ const Button = styled.button`
 `;
 
 function Signup() {
+  const setIsModalOpen = useSetRecoilState(isModalOpenState);
+  const setUser = useSetRecoilState(userState);
+  const setIsLoggedIn = useSetRecoilState(LoginState);
+
   console.log('$SIGNUP');
   const [inputs, setInputs] = useState({
     id: '',
@@ -51,12 +58,32 @@ function Signup() {
     });
   };
 
+  const login = async () => {
+    console.log('로그인요청!', id, pw);
+    const response = await apiLogin({ userid: id, password: pw });
+    const { userid: userId, accessToken: token } = response.data;
+    localStorage.setItem('token', JSON.stringify({ userId, token }));
+    setUser(userId);
+    setIsLoggedIn(true);
+    setIsModalOpen('');
+    console.log(response);
+  };
+
   const signUp = async () => {
     if (pw !== pw2) {
       console.log('비밀번호 확인');
     } else {
       console.log('회원가입요청!', id, pw, userName);
-      const resposne = await apiSignup({ id, pw, userName });
+      const resposne = await apiSignup({
+        userid: id,
+        password: pw,
+        name: userName,
+      });
+      if (resposne.status === 200) {
+        alert('회원가입 완료 후 자동으로 로그인 ㄱ');
+        login();
+        setIsModalOpen('');
+      }
       console.log(resposne);
     }
   };
