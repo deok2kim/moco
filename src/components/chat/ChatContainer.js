@@ -16,7 +16,7 @@ function ChatContainer({ chatPublish }) {
   console.log('$ChatContainer');
   return (
     <Wrapper>
-      <ChatRooms />
+      <ChatRooms chatPublish={chatPublish} />
       <ChatRoom chatData={chatLog} chatPublish={chatPublish} />
     </Wrapper>
   );

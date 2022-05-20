@@ -80,7 +80,7 @@ function ChatRoom({ chatData, chatPublish }) {
   const [text, setText] = useState('');
   const [chat, setChat] = useState([]);
 
-  console.log(chatData);
+  // console.log(chatData);
 
   // 스크롤 밑으로
   const scrollRef = useRef();
@@ -159,7 +159,7 @@ function ChatRoom({ chatData, chatPublish }) {
 
     scrollRef.current.scrollTo(0, 1000);
   }, [chat]);
-  console.log('$ChatRoom', chat);
+  // console.log('$ChatRoom', chat);
   return (
     <Wrapper>
       <MessageDisplay ref={scrollRef}>

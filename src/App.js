@@ -39,31 +39,40 @@ function App() {
 
   // 채팅 웹소켓
   const client = useRef({});
-
-  const chatSubscribe = async () => {
-    console.log('구독');
-    client.current.subscribe(`/topic/chat/room/${chatRoom}`, message => {
-      console.log(message);
-      const res = JSON.parse(message.body);
-      console.log(res);
-      const now = new Date();
-      setChatLog(prev => [
-        ...prev,
-        {
-          userId: res.sender,
-          message: res.message,
-          index: now.getTime(),
-          time: `${now.getHours()}:${now.getMinutes()}`,
-        },
-      ]);
-    });
+  const subs = useRef(null);
+  console.log('#################현재 채팅방', chatRoom);
+  const chatSubscribe = async room => {
+    console.log('구독', room);
+    if (subs.current) {
+      subs.current.unsubscribe();
+    }
+    subs.current = client.current.subscribe(
+      `/topic/chat/room/${room}`,
+      message => {
+        console.log(room, '구독 시작');
+        console.log(message);
+        const res = JSON.parse(message.body);
+        console.log(res);
+        const now = new Date();
+        setChatLog(prev => [
+          ...prev,
+          {
+            userId: res.sender,
+            message: res.message,
+            index: now.getTime(),
+            time: `${now.getHours()}:${now.getMinutes()}`,
+          },
+        ]);
+      },
+    );
 
     // 입장하기
+    console.log('입장전 채팅방', chatRoom);
     client.current.publish({
       destination: '/app/chat/message',
       body: JSON.stringify({
         type: 'ENTER',
-        roomId: chatRoom,
+        roomId: room,
         sender: user,
       }),
     });
@@ -74,9 +83,13 @@ function App() {
       reconnectDelay: 10000,
       heartbeatIncoming: 8000,
       heartbeatOutgoing: 8000,
-      onConnect: () => {
+      onConnect: room => {
         if (user) {
-          chatSubscribe();
+          if (typeof room === 'string') {
+            chatSubscribe(room);
+          } else {
+            chatSubscribe('BTC');
+          }
         }
       },
       onStompError: frame => {
@@ -111,6 +124,13 @@ function App() {
 
     return () => chatDisconnect();
   }, [user]);
+
+  useEffect(() => {
+    console.log('채팅방 이동으로 재구독', chatRoom);
+    if (client.current) {
+      client.current.onConnect(chatRoom);
+    }
+  }, [chatRoom]);
 
   // 로그인 체크
   useEffect(() => {

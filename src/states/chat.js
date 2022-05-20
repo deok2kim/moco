@@ -1,8 +1,19 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
+import { coinListQuery } from './state';
 
 export const chatRoomState = atom({
   key: 'ChatRoom',
   default: 'BTC',
+});
+
+export const chatRoomsState = selector({
+  key: 'ChatRooms',
+  get: ({ get }) => {
+    const res = get(coinListQuery);
+    return res.map(r => {
+      return { name: r.coinName, symbol: r.coinSymbol, type: r.coinType };
+    });
+  },
 });
 
 export const chatLogState = atom({
