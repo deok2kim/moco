@@ -75,7 +75,9 @@ function App() {
       heartbeatIncoming: 8000,
       heartbeatOutgoing: 8000,
       onConnect: () => {
-        chatSubscribe();
+        if (user) {
+          chatSubscribe();
+        }
       },
       onStompError: frame => {
         console.error(frame);
