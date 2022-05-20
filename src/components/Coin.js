@@ -34,6 +34,14 @@ function Coin({ coin, toggleFavoriteCoin, onChangeCurrentCoin }) {
 
 export default Coin;
 
+Coin.defaultProps = {
+  coin: {},
+  toggleFavoriteCoin: () => {},
+  onChangeCurrentCoin: () => {},
+};
+
 Coin.propTypes = {
   coin: PropTypes.objectOf(PropTypes.string),
+  toggleFavoriteCoin: PropTypes.func,
+  onChangeCurrentCoin: PropTypes.func,
 };

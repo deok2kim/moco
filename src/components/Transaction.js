@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { formatNumber } from '../utils/common';
@@ -51,6 +51,10 @@ const ColorTextBuySell = styled.span`
 `;
 
 function Transaction({ transaction, symbol }) {
+  const scrollRef = useRef();
+  useEffect(() => {
+    scrollRef.current.scrollTo(0, 1000);
+  });
   return (
     <Container>
       <Title>체결 내역</Title>
@@ -68,7 +72,7 @@ function Transaction({ transaction, symbol }) {
           </tr>
         </thead>
       </Header>
-      <div>
+      <div ref={scrollRef}>
         <Body>
           <colgroup>
             <col width="33%" />

@@ -8,6 +8,7 @@ import {
   currentCoinState,
   tickerState,
 } from '../states/state';
+import { apiToggleFavoriteCoin } from '../utils/api';
 import CoinList from './CoinList';
 import Loader from './Loader';
 
@@ -36,6 +37,7 @@ function CoinListContainer() {
   const toggleFavoriteCoin = symbol => {
     console.log('코인 즐찾 기능', symbol);
     // TODO: API 추가
+    // apiToggleFavoriteCoin;
   };
 
   useEffect(() => {

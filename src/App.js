@@ -256,7 +256,7 @@ const Container = styled.div`
   height: 130vh;
   /* min-width: 1500px; */
   grid-template-columns: 1.1fr 1fr 1fr 1.1fr;
-  grid-template-rows: 0.2fr 1fr 0.8fr 0.5fr;
+  grid-template-rows: 0.2fr 1.25fr 0.8fr 0.5fr;
   grid-template-areas:
     'nav nav nav nav'
     'sidebar main main sidebarRight'

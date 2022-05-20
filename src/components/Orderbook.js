@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -46,9 +46,9 @@ const Body = styled(Header)`
   }
 `;
 
-const Tr = styled.tr`
-  background-color: ${props => props.color};
-`;
+// const Tr = styled.tr`
+//   background-color: ${props => props.color};
+// `;
 
 const ColorTextBuySell = styled.span`
   color: ${props => (props.color === '1' ? 'red' : 'blue')};
@@ -58,6 +58,13 @@ function Orderbook({ orderbook }) {
   const prevClosePrice = useRecoilValue(prevClosePriceState);
   const currentCoin = useRecoilValue(currentCoinState);
   // console.log(orderbook, prevClosePrice);
+
+  // 스크롤 가운데로
+  const scrollRef = useRef(null);
+  useEffect(() => {
+    scrollRef.current.scrollTo(0, 580);
+  });
+
   const calRate = price => {
     const rate = ((price - prevClosePrice) / prevClosePrice) * 100;
 
@@ -79,7 +86,7 @@ function Orderbook({ orderbook }) {
           </tr>
         </thead>
       </Header>
-      <div>
+      <div ref={scrollRef}>
         <Body>
           <colgroup>
             <col width="30%" />
@@ -88,18 +95,19 @@ function Orderbook({ orderbook }) {
           </colgroup>
           <tbody>
             {orderbook.ask.map(o => (
-              <Tr key={o.p} color="#2c3847">
+              <tr key={o.p} color="#2c3847">
                 <td>{formatNumber(o.p)}</td>
                 <td>{calRate(o.p)}%</td>
                 <td>{formatNumber(o.q)}</td>
-              </Tr>
+              </tr>
             ))}
+
             {orderbook.bid.map(o => (
-              <Tr key={o.p} color="#3a343c">
+              <tr key={o.p} color="#3a343c">
                 <td>{formatNumber(o.p)}</td>
                 <td>{calRate(o.p)}%</td>
                 <td>{formatNumber(o.q)}</td>
-              </Tr>
+              </tr>
             ))}
           </tbody>
         </Body>

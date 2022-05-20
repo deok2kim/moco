@@ -41,11 +41,11 @@ function Post({ post }) {
     if (isLike) {
       // /board/addLike
       console.log('좋아요');
-      apiToggleLikeBoard({ index: post.id }, 'addLike');
+      apiToggleLikeBoard({ index: post.index }, 'addLike');
     } else {
       // /board/addDisLike
       console.log('싫어요');
-      apiToggleLikeBoard({ index: post.id }, 'addDisLike');
+      apiToggleLikeBoard({ index: post.index }, 'addDisLike');
     }
   };
   console.log(post);

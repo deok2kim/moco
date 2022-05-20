@@ -8,7 +8,8 @@ import { userState } from '../../states/users';
 import { chatLogState } from '../../states/chat';
 
 const Wrapper = styled.div`
-  height: 20%;
+  height: 40vh;
+  /* max-height: 300px; */
 `;
 
 const MessageDisplay = styled.div`
@@ -18,6 +19,7 @@ const MessageDisplay = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  /* max-height: 300px; */
 `;
 
 const MessageBox = styled.div`
@@ -153,14 +155,10 @@ function ChatRoom({ chatData, chatPublish }) {
   }, [chatData]);
 
   useEffect(() => {
-    console.log('unmounted');
+    console.log('mounted');
 
-    scrollRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-      inline: 'nearest',
-    });
-  }, []);
+    scrollRef.current.scrollTo(0, 1000);
+  }, [chat]);
   console.log('$ChatRoom', chat);
   return (
     <Wrapper>

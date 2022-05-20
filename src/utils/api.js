@@ -68,30 +68,30 @@ export async function apiToggleLikeBoard(data, isLike) {
   });
   return response;
 }
-export async function apiHideBoard(data) {
-  const response = await axios({
-    method: 'post',
-    url: `/api/board/hide`,
-    data,
-  });
-  return response;
-}
-export async function apiHideReply(data) {
-  const response = await axios({
-    method: 'post',
-    url: `/api/board/reply`,
-    data,
-  });
-  return response;
-}
-export async function apiFetchHideCoins(data) {
-  const response = await axios({
-    method: 'get',
-    url: `/api/coin/list`,
-    data,
-  });
-  return response;
-}
+// export async function apiHideBoard(data) {
+//   const response = await axios({
+//     method: 'post',
+//     url: `/api/board/hide`,
+//     data,
+//   });
+//   return response;
+// }
+// export async function apiHideReply(data) {
+//   const response = await axios({
+//     method: 'post',
+//     url: `/api/board/reply`,
+//     data,
+//   });
+//   return response;
+// }
+// export async function apiFetchHideCoins(data) {
+//   const response = await axios({
+//     method: 'get',
+//     url: `/api/coin/list`,
+//     data,
+//   });
+//   return response;
+// }
 export async function apiToggleHideCoin(data) {
   const response = await axios({
     method: 'post',
