@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   useRecoilState,
   useRecoilValue,
   useRecoilValueLoadable,
   useSetRecoilState,
-} from 'recoil';
-import styled from 'styled-components';
-import Posts from './Posts';
-import Pagination from './Pagination';
+} from "recoil";
+import styled from "styled-components";
+import Posts from "./Posts";
+// import Pagination from "./Pagination";
 
-import { isModalOpenState } from '../../states/modal';
-import { postsState } from '../../states/posts';
-import { LoginState } from '../../states/users';
-import Loader from '../Loader';
+// import { isModalOpenState } from "../../states/modal";
+// import { postsState } from "../../states/posts";
+// import { LoginState } from "../../states/users";
+import Loader from "../Loader";
+import usePosts from "../../hook/usePosts";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -35,48 +36,44 @@ const Button = styled.button`
 `;
 
 function PostsContainer() {
-  console.log('$PostsContainer');
-  const { state, contents: posts } = useRecoilValueLoadable(postsState);
+  console.log("$PostsContainer!@#$");
+  // const { state, contents: posts } = useRecoilValueLoadable(postsState);
   // const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [postLength, setPostLength] = useState(1);
+  // const [page, setPage] = useState(1);
+  // const [postLength, setPostLength] = useState(1);
+
+  // refac
+  const { data, loading, error, refetch } = usePosts();
 
   // 로그인 상태
-  const isLoggedIn = useRecoilValue(LoginState);
+  // const isLoggedIn = useRecoilValue(LoginState);
 
-  const setIsModalOpen = useSetRecoilState(isModalOpenState);
+  // const setIsModalOpen = useSetRecoilState(isModalOpenState);
 
-  const onToggleModal = target => {
-    if (!isLoggedIn) {
-      alert('로그인 후 이용해주세요.');
-      return;
-    }
-    console.log('POST MODAL OPEN');
-    setIsModalOpen(prev => target);
-  };
-
-  // console.log(page);
-  // const getPosts = async () => {
-  //   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-  //   // TODO: 뒤에 파라미터로 페이지 번호와 페이지당 게시물 수를 넘겨야한다.
-  //   const json = await response.json();
-  //   setPosts(json);
-  //   setPostLength(json.length);
+  // const onToggleModal = (target) => {
+  //   if (!isLoggedIn) {
+  //     alert("로그인 후 이용해주세요.");
+  //     return;
+  //   }
+  //   console.log("POST MODAL OPEN");
+  //   setIsModalOpen((prev) => target);
   // };
 
-  // useEffect(() => {
-  //   getPosts();
-  // }, []);
-  console.log(posts);
+  // console.log(data, loading, error, refetch);
+  // if (loading) return <div>loading</div>;
+  // if (error) return <div>error</div>;
+  // if (data) return <div>data</div>;
+
+  // console.log(posts);
   return (
     <Wrapper>
-      <Button onClick={() => onToggleModal('createPost')}>+ Add</Button>
-      {state === 'loading' && <Loader type="spin" color="#FE9601" />}
-      {state === 'hasError' && <div>...Error</div>}
-      {state === 'hasValue' && (
+      {/* <Button onClick={() => onToggleModal("createPost")}>+ Add</Button>
+      {state === "loading" && <Loader type="spin" color="#FE9601" />}
+      {state === "hasError" && <div>...Error</div>}
+      {state === "hasValue" && (
         <>
           <ul style={{ margin: 0 }}>
-            {posts.map(post => (
+            {posts.map((post) => (
               <Posts
                 key={post.index}
                 post={post}
@@ -84,14 +81,11 @@ function PostsContainer() {
               />
             ))}
           </ul>
-          {/* <Pagination
-            total={posts.length}
-            limit={20}
-            page={page} // 현재페이지
-            setPage={setPage}
-          /> */}
         </>
-      )}
+      )} */}
+      {loading && <Loader type="spin" color="#FE9601" />}
+      {error && <div>Error</div>}
+      {data && <Posts posts={data} />}
     </Wrapper>
   );
 }

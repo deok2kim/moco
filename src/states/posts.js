@@ -1,5 +1,5 @@
-import { atom, selector } from 'recoil';
-import { apiFetchBoard, apiFetchBoards, apiFetchReply } from '../utils/api';
+import { atom, selector } from "recoil";
+import { apiFetchBoard, apiFetchBoards, apiFetchReply } from "../utils/api";
 
 // export const postsState = selectorFamily({
 //   key: "Posts",
@@ -13,21 +13,21 @@ import { apiFetchBoard, apiFetchBoards, apiFetchReply } from '../utils/api';
 //       return response.json();
 //     },
 // });
-export const postsState = selector({
-  key: 'Posts',
-  get: async () => {
-    const response = await apiFetchBoards();
-    return response.data;
-  },
-});
+// export const postsState = selector({
+//   key: 'Posts',
+//   get: async () => {
+//     const response = await apiFetchBoards();
+//     return response.data;
+//   },
+// });
 
 export const currentPostIdState = atom({
-  key: 'CurrentPostId',
+  key: "CurrentPostId",
   default: 0,
 });
 
 export const postState = selector({
-  key: 'Post',
+  key: "Post",
   get: async ({ get }) => {
     const id = get(currentPostIdState);
 
@@ -37,7 +37,7 @@ export const postState = selector({
 });
 
 export const commentsState = selector({
-  key: 'Comments',
+  key: "Comments",
   get: async ({ get }) => {
     const id = get(currentPostIdState);
 

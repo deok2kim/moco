@@ -1,48 +1,48 @@
-import axios from 'axios';
+import axios from "axios";
 
 export async function apiSignup(data) {
   const response = await axios({
-    method: 'post',
-    url: '/api/user/join',
+    method: "post",
+    url: "/api/user/join",
     data,
   });
   return response;
 }
 export async function apiLogin(data) {
   const response = await axios({
-    method: 'post',
-    url: '/api/user/login',
+    method: "post",
+    url: "/api/user/login",
     data,
   });
   return response;
 }
-export async function apiFetchBoards() {
-  const response = await axios({
-    method: 'get',
-    url: '/api/boards/community',
-  });
-  return response;
-}
+// export async function apiFetchBoards() {
+//   const response = await axios({
+//     method: "get",
+//     url: "/api/boards/community",
+//   });
+//   return response;
+// }
 
 export async function apiFetchBoard(data) {
   const response = await axios({
-    method: 'get',
+    method: "get",
     url: `/api/board/id/${data.id}`,
   });
   return response;
 }
 export async function apiFetchReply(data) {
   const response = await axios({
-    method: 'get',
+    method: "get",
     url: `/api/reply/id/${data.id}`,
   });
   return response;
 }
 export async function apiCreateBoard(data, boardName) {
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const { token } = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios({
-    method: 'post',
+    method: "post",
     url: `/api/boards/${boardName}/write`, // 보드네임: 현재는 커뮤니티만
     data,
     headers: {
@@ -53,7 +53,7 @@ export async function apiCreateBoard(data, boardName) {
 }
 export async function apiCreateReply(data) {
   const response = await axios({
-    method: 'post',
+    method: "post",
     url: `/api/board/addReply`,
     data,
   });
@@ -62,7 +62,7 @@ export async function apiCreateReply(data) {
 export async function apiToggleLikeBoard(data, isLike) {
   // isLike: addLike, dislike
   const response = await axios({
-    method: 'post',
+    method: "post",
     url: `/api/board/${isLike}`,
     data,
   });
@@ -94,7 +94,7 @@ export async function apiToggleLikeBoard(data, isLike) {
 // }
 export async function apiToggleHideCoin(data) {
   const response = await axios({
-    method: 'post',
+    method: "post",
     url: `/api/coin/hide`,
     data, // 코인 심볼, 코인 네임
   });
@@ -102,7 +102,7 @@ export async function apiToggleHideCoin(data) {
 }
 export async function apiFetchFavoriteCoins(data) {
   const response = await axios({
-    method: 'post',
+    method: "post",
     url: `/api/coin/update`,
     data, // userId
   });
@@ -110,7 +110,7 @@ export async function apiFetchFavoriteCoins(data) {
 }
 export async function apiToggleFavoriteCoin(data) {
   const response = await axios({
-    method: 'post',
+    method: "post",
     url: `/api/coin/update`,
     data, // userId, symbol
   });
