@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import propTypes from 'prop-types';
-import { useRecoilValue } from 'recoil';
-import { apiCreateBoard } from '../../utils/api';
-import { userState } from '../../states/users';
+import React, { useState } from "react";
+import styled from "styled-components";
+import propTypes from "prop-types";
+import { useRecoilValue } from "recoil";
+import { apiCreateBoard } from "../../utils/api";
+import { userState } from "../../states/users";
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,7 +18,7 @@ const InputWrapper = styled.div`
   border-radius: 5px;
   width: 80%;
   margin: 0.5rem;
-  background-color: ${props => props.color || 'rgb(234 234 234)'};
+  background-color: ${(props) => props.color || "rgb(234 234 234)"};
 `;
 
 const Input = styled.input`
@@ -61,13 +61,13 @@ const FooterButton = styled.button`
 
 function PostForm() {
   const [inputs, setInputs] = useState({
-    title: '',
-    contents: '',
+    title: "",
+    contents: "",
   });
 
   const { title, contents } = inputs;
   const currentUser = useRecoilValue(userState);
-  const onChange = e => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs,
@@ -75,17 +75,8 @@ function PostForm() {
     });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log('CREATE POST!');
-    // TODO: API 요청
-    // 후 종료 (글 작성 완료 메시지?)
-    // {
-    //   "title": "제목제2222목제목",
-    //   "contents": "내용물내용물222222내용물",
-    //   "type": "1",
-    //   "userid": "myid1"
-    //   }
     apiCreateBoard(
       {
         title,
@@ -93,7 +84,7 @@ function PostForm() {
         type: 1,
         userid: currentUser,
       },
-      'community',
+      "community"
     );
   };
 
@@ -120,7 +111,6 @@ function PostForm() {
         </InputWrapper>
         <Footer>
           <FooterButton>CREATE</FooterButton>
-          {/* <FooterButton>CLOSE</FooterButton> */}
         </Footer>
       </form>
     </Wrapper>

@@ -1,13 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Comment from './Comment';
+import React from "react";
+import PropTypes from "prop-types";
+import CommentItem from "./CommentItem";
 
 function Comments({ comments }) {
-  console.log(comments);
   return (
     <>
-      {comments.map(comment => (
-        <Comment comment={comment} key={comment.index} />
+      {comments.map((comment) => (
+        <CommentItem comment={comment} key={comment.id} />
       ))}
     </>
   );
@@ -20,7 +19,9 @@ Comments.defaultProps = {
 };
 
 Comments.propTypes = {
-  comments: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  comments: PropTypes.arrayOf(
+    PropTypes.objectOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    )
   ),
 };

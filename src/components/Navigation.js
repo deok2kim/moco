@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
-import { GrLogin } from 'react-icons/gr';
-import { isModalOpenState } from '../states/modal';
-import { userState } from '../states/users';
-import Login from './Login';
-import Modal from './Modal';
-import Signup from './Signup';
-import PostContainer from './posts/PostContainer';
-import PostForm from './posts/PostForm';
+import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import { GrLogin } from "react-icons/gr";
+import { isModalOpenState } from "../states/modal";
+import { userState } from "../states/users";
+import Login from "./Login";
+import Modal from "./Modal";
+import Signup from "./Signup";
+import PostDetailContainer from "./posts/PostDetailContainer";
+import PostForm from "./posts/PostForm";
 
 const Wrapper = styled.div`
   padding: 15px;
@@ -42,7 +42,7 @@ function Navagation() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModalOpenState);
   const [user, setUser] = useRecoilState(userState);
 
-  const toggleModal = target => {
+  const toggleModal = (target) => {
     setIsModalOpen(target);
   };
   return (
@@ -50,21 +50,21 @@ function Navagation() {
       <Logo>NIOC 433</Logo>
       <ButtonWrapper>
         {!user && (
-          <Button type="button" onClick={() => toggleModal('login')}>
+          <Button type="button" onClick={() => toggleModal("login")}>
             <GrLogin size="2rem" />
           </Button>
         )}
       </ButtonWrapper>
-      {isModalOpen === 'login' && (
+      {isModalOpen === "login" && (
         <Modal component={<Login />} header="로그인" />
       )}
-      {isModalOpen === 'signup' && (
+      {isModalOpen === "signup" && (
         <Modal component={<Signup />} header="회원가입" />
       )}
-      {isModalOpen === 'post' && (
-        <Modal component={<PostContainer />} header="게시글" />
+      {isModalOpen === "post" && (
+        <Modal component={<PostDetailContainer />} header="게시글" />
       )}
-      {isModalOpen === 'createPost' && (
+      {isModalOpen === "createPost" && (
         <Modal component={<PostForm />} header="글쓰기" />
       )}
     </Wrapper>

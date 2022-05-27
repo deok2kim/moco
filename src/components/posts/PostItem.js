@@ -15,10 +15,14 @@ const Title = styled.p`
   text-align: start;
 `;
 
-function PostItem({ post }) {
+function PostItem({ post, onToggleModalForPost }) {
   return (
     <Wrapper>
-      <Title>
+      <Title
+        onClick={() =>
+          onToggleModalForPost({ target: "post", postId: post.id })
+        }
+      >
         {post.id}. {post.title}
       </Title>
     </Wrapper>
@@ -29,12 +33,12 @@ export default React.memo(PostItem);
 
 PostItem.defaultProps = {
   post: {},
-  // onToggleModal: () => {},
+  onToggleModalForPost: () => {},
 };
 
 PostItem.propTypes = {
   post: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ),
-  // onToggleModal: PropTypes.func,
+  onToggleModalForPost: PropTypes.func,
 };

@@ -1,9 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import styled from 'styled-components';
-
-import { CgProfile } from 'react-icons/cg';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { CgProfile } from "react-icons/cg";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -36,32 +34,32 @@ const CommentEtcInfo = styled.div`
   margin: 0.5rem;
 `;
 
-function Comment({ comment }) {
-  const { boardid, index, userid, useyn, replycontent, createdt } = comment;
+function ComentItem({ comment }) {
+  const { id, postId, name, email, body } = comment;
   return (
     <Wrapper>
       <ProfileWrapper>
         <ProfileImg>
           <CgProfile size="2rem" />
         </ProfileImg>
-        <Name>{userid}</Name>
+        <Name>{name.split(" ")[0]}</Name>
       </ProfileWrapper>
       <ContentWrapper>
-        <Content>{replycontent}</Content>
-        <CommentEtcInfo>{createdt.split('T').join(' ')}</CommentEtcInfo>
+        <Content>{body}</Content>
+        <CommentEtcInfo>{email}</CommentEtcInfo>
       </ContentWrapper>
     </Wrapper>
   );
 }
 
-export default React.memo(Comment);
+export default React.memo(ComentItem);
 
-Comment.defaultProps = {
+ComentItem.defaultProps = {
   comment: {},
 };
 
-Comment.propTypes = {
+ComentItem.propTypes = {
   comment: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ),
 };

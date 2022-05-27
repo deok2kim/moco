@@ -1,38 +1,16 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { useSetRecoilState } from "recoil";
-import styled from "styled-components";
-import { currentPostIdState } from "../../states/posts";
 import PostItem from "./PostItem";
 
-// const Wrapper = styled.div`
-//   margin: 0.8rem 1rem;
-//   cursor: pointer;
-//   &:hover {
-//     font-weight: bold;
-//   }
-// `;
-
-// const Title = styled.p`
-//   font-size: 1rem;
-//   text-align: start;
-// `;
-
-function Posts({ posts }) {
-  console.log("$Posts");
-  // const setCurrentPostId = useSetRecoilState(currentPostIdState);
-  // const setIsModalOpen = useSetRecoilState(isModalOpenState);
-
-  // const onClick = () => {
-  //   if (post.index) {
-  //     setCurrentPostId(post.index);
-  //     onToggleModal("post");
-  //   }
-  // };
+function Posts({ posts, onToggleModalForPost }) {
   return (
     <>
       {posts.map((post) => (
-        <PostItem post={post} key={post.id} />
+        <PostItem
+          post={post}
+          key={post.id}
+          onToggleModalForPost={onToggleModalForPost}
+        />
       ))}
     </>
   );
@@ -42,7 +20,7 @@ export default React.memo(Posts);
 
 Posts.defaultProps = {
   posts: {},
-  // onToggleModal: () => {},
+  onToggleModalForPost: () => {},
 };
 
 Posts.propTypes = {
@@ -51,5 +29,5 @@ Posts.propTypes = {
       PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     )
   ),
-  // onToggleModal: PropTypes.func,
+  onToggleModalForPost: PropTypes.func,
 };
