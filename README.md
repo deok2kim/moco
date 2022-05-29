@@ -4,6 +4,8 @@
 2. npm start
    Runs the app in the development mode.
    Open http://localhost:3000 to view it in your browser.
+   
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/52899349/170879561-e1bc4807-08c8-497b-bb48-eb53e9959f17.gif)
 
 ## 사용한 기술 스택
 
