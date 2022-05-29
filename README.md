@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+## 프로젝트 실행 방법
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. npm install
+2. npm start
+   Runs the app in the development mode.
+   Open http://localhost:3000 to view it in your browser.
 
-## Available Scripts
+## 사용한 기술 스택
 
-In the project directory, you can run:
+1. javascript
+2. html / css
+3. react
+4. recoil
+5. styled-components
+6. lightweight-charts
+7. react-icons
+8. react-loading
 
-### `npm start`
+## 구현 기능 목록 (Software Requirement Specification)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. 코인에 대한 (현재)정보 ex.현재가격, 시가, 종가, 거래량 등 표시
+2. 호가 표시
+3. 체결 내역 표시
+4. 현재가를 기준으로 실시간 코인 가격 (그래프) 표시
+5. 코인의 목록
+6. 코인 즐겨찾기
+7. 코인 목록 인피니티 스크롤
+8. 코인 검색
+9. 게시판
+10. 채팅
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 구현 방법 및 구현하면서 어려웠던 점 (+ 개선)
 
-### `npm test`
+1. 웹소켓으로 받아오는 가격은 초기에 많지 않아서 데이터가 가득한 화면을 보여주기 어렵기 때문에 API로 초기 데이터를 가져오려고했으나 오더북 데이터가 CORS문제가 발생해서 가져오지 못함. => 다른 public api 를 이용하여 초기 데이터 구성, 오더북 cors 문제도 덩달아 해결
+2. 리코일 사용 스킬이 아직 미숙하여 상태관리부분이 부족함
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 성능 최적화에 대해서 고민하고 개선한 방법
 
-### `npm run build`
+값을 받아와서 쌓을 수록 렌더링할 데이터를 분류해야할 작업이 많아지기 때문에 느려진다고 생각했습니다. 그래서 어느정도 사용자에게 필요한 만큼의 정보만 남기고 지난 데이터나 필요없는 데이터는 삭제했습니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-> 자식 컴포넌트 중에 부모 컴포넌트의 리렌더링으로 인해 같이 리렌더링 되는 (상태가 변하지 않아서 리렌더링이 필요 없는)컴포넌트를 React.memo 를 통해 최적화 -> useCallback 을 사용해서 한번 만들어진 함수는 재사용
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## FAQ, 차후 개선책
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. 속도가 느린점
 
-### `npm run eject`
+- 데이터를 더 최적화
+- => 위에서 말한 최적화를 통해 성능을 개선했습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. 그래프 보기 힘든점
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 다양한 차트 라이브러리를 찾아보기
+- => lightweight 라는 라이브러리를 찾아 기존의 차트보다 좋은 결과물을 얻었습니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+3. 성능을 더 개선
+   학습한 결과 React-Saga를 통해 웹소켓으로 받아온 데이터를 즉시 사용하지 않고, 잠깐 보류해 둔 뒤 모아서 사용할 수 있다는 결과를 얻었습니다.
+   하지만 바로 적용하기에는 약간의 장벽이 있어 프로젝트를 마무리하고, 따로 스스로 개선해보기로 했습니다.
+   => 상태관리 라이브러리를 리코일로 선택하여 개선하려고 했으나, 아직은 스킬부족으로 추후 개선을 하기로 함.
