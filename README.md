@@ -58,3 +58,14 @@
    학습한 결과 React-Saga를 통해 웹소켓으로 받아온 데이터를 즉시 사용하지 않고, 잠깐 보류해 둔 뒤 모아서 사용할 수 있다는 결과를 얻었습니다.
    하지만 바로 적용하기에는 약간의 장벽이 있어 프로젝트를 마무리하고, 따로 스스로 개선해보기로 했습니다.
    => 상태관리 라이브러리를 리코일로 선택하여 개선하려고 했으나, 아직은 스킬부족으로 추후 개선을 하기로 함.
+
+## 와이어 프레임
+
+![01_메인 + 게시판](https://user-images.githubusercontent.com/52899349/171353841-2f575a37-ec64-4666-90d9-5cd1465e1962.png)
+![02_메인 + 채팅](https://user-images.githubusercontent.com/52899349/171353847-6f87aa19-d682-474b-8812-d7bf70409628.png)
+![03_로그인](https://user-images.githubusercontent.com/52899349/171353849-501ca4dc-d78a-42e3-8dca-1a56ea0082cb.png)
+![04_게시판](https://user-images.githubusercontent.com/52899349/171353850-afdefbea-fd08-4c30-9847-8bb3dc0864a1.png)
+
+
+
+
